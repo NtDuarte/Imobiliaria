@@ -1,0 +1,2052 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JC Nascimento Imóveis – Belford Roxo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #0d1b4b;
+            --navy-mid: #1a2e6c;
+            --gold: #e8a920;
+            --gold-light: #fbd262;
+            --green: #1db954;
+            --white: #ffffff;
+            --off-white: #f7f5f0;
+            --gray-light: #e8e6e0;
+            --gray-text: #6b6860;
+            --text: #1a1814;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'DM Sans', sans-serif; background: var(--off-white); color: var(--text); overflow-x: hidden; }
+
+        #progress-bar { position: fixed; top: 0; left: 0; height: 3px; width: 0%; background: linear-gradient(90deg, var(--gold), var(--gold-light)); z-index: 9999; transition: width 0.1s; }
+
+        header { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 0 40px; height: 70px; display: flex; align-items: center; justify-content: space-between; background: rgba(13, 27, 75, 0.97); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(232,169,32,0.2); transition: all 0.3s; }
+        header.scrolled { height: 60px; box-shadow: 0 4px 30px rgba(0,0,0,0.3); }
+
+        .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+        .logo-icon { width: 40px; height: 40px; background: var(--gold); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; color: var(--navy); font-weight: 900; font-family: 'Playfair Display', serif; }
+        .logo-text { line-height: 1.1; }
+        .logo-text strong { display: block; font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--white); letter-spacing: 0.5px; }
+        .logo-text span { font-size: 0.65rem; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; font-weight: 500; }
+
+        nav { display: flex; align-items: center; gap: 8px; }
+        nav a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.85rem; font-weight: 500; padding: 8px 14px; border-radius: 6px; transition: all 0.2s; letter-spacing: 0.3px; }
+        nav a:hover { color: var(--white); background: rgba(255,255,255,0.08); }
+        .nav-cta { background: var(--gold) !important; color: var(--navy) !important; font-weight: 600 !important; padding: 8px 18px !important; margin-left: 8px; }
+        .nav-cta:hover { background: var(--gold-light) !important; transform: translateY(-1px); }
+        .nav-anunciar { background: rgba(232,169,32,0.15) !important; color: var(--gold-light) !important; border: 1px solid rgba(232,169,32,0.35) !important; font-weight: 600 !important; }
+        .nav-anunciar:hover { background: rgba(232,169,32,0.25) !important; }
+
+        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; }
+        .hamburger span { display: block; width: 22px; height: 2px; background: white; border-radius: 2px; transition: all 0.3s; }
+
+        /* HERO */
+        .hero { height: 100vh; min-height: 650px; background: linear-gradient(135deg, rgba(13,27,75,0.92) 0%, rgba(13,27,75,0.7) 50%, rgba(0,0,0,0.5) 100%), url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1600&q=80') center/cover; display: flex; align-items: center; position: relative; overflow: hidden; }
+        .hero::before { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 120px; background: linear-gradient(to top, var(--off-white), transparent); }
+        .hero-content { max-width: 1200px; margin: 0 auto; padding: 0 40px; padding-top: 70px; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; width: 100%; }
+        .hero-left { color: white; }
+        .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(232,169,32,0.15); border: 1px solid rgba(232,169,32,0.4); color: var(--gold-light); padding: 6px 16px; border-radius: 50px; font-size: 0.75rem; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px; }
+        .hero-title { font-family: 'Playfair Display', serif; font-size: clamp(2.2rem, 4vw, 3.5rem); font-weight: 900; line-height: 1.15; margin-bottom: 20px; }
+        .hero-title em { font-style: normal; color: var(--gold); }
+        .hero-subtitle { font-size: 1rem; color: rgba(255,255,255,0.75); line-height: 1.7; margin-bottom: 36px; max-width: 440px; }
+        .hero-stats { display: flex; gap: 32px; margin-bottom: 36px; }
+        .hero-stat { display: flex; flex-direction: column; }
+        .hero-stat-num { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--gold); line-height: 1; }
+        .hero-stat-label { font-size: 0.75rem; color: rgba(255,255,255,0.6); margin-top: 4px; }
+        .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+
+        .btn-primary { display: inline-flex; align-items: center; gap: 8px; background: var(--gold); color: var(--navy); padding: 14px 28px; border-radius: 8px; font-weight: 700; font-size: 0.9rem; text-decoration: none; transition: all 0.25s; border: none; cursor: pointer; }
+        .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(232,169,32,0.4); }
+        .btn-outline { display: inline-flex; align-items: center; gap: 8px; background: transparent; color: white; padding: 14px 28px; border-radius: 8px; font-weight: 600; font-size: 0.9rem; text-decoration: none; border: 1.5px solid rgba(255,255,255,0.35); transition: all 0.25s; cursor: pointer; }
+        .btn-outline:hover { background: rgba(255,255,255,0.1); border-color: white; }
+
+        /* SEARCH CARD */
+        .hero-search-card { background: white; border-radius: 20px; padding: 32px; box-shadow: 0 20px 60px rgba(0,0,0,0.25); }
+        .search-card-title { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--navy); margin-bottom: 6px; font-weight: 700; }
+        .search-card-sub { font-size: 0.82rem; color: var(--gray-text); margin-bottom: 24px; }
+        .search-tabs { display: flex; gap: 4px; margin-bottom: 20px; background: var(--off-white); padding: 4px; border-radius: 8px; }
+        .search-tab { flex: 1; padding: 9px; text-align: center; font-size: 0.82rem; font-weight: 600; border-radius: 6px; cursor: pointer; transition: all 0.2s; color: var(--gray-text); border: none; background: transparent; }
+        .search-tab.active { background: var(--navy); color: white; }
+        .search-field { margin-bottom: 14px; }
+        .search-field label { display: block; font-size: 0.75rem; font-weight: 600; color: var(--gray-text); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .search-field select, .search-field input { width: 100%; padding: 11px 14px; border: 1.5px solid var(--gray-light); border-radius: 8px; font-size: 0.9rem; font-family: 'DM Sans', sans-serif; color: var(--text); background: white; outline: none; transition: border-color 0.2s; }
+        .search-field select:focus, .search-field input:focus { border-color: var(--navy); }
+        .search-fields-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .btn-search { width: 100%; padding: 14px; background: var(--navy); color: white; border: none; border-radius: 8px; font-size: 0.95rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: all 0.25s; margin-top: 6px; font-family: 'DM Sans', sans-serif; }
+        .btn-search:hover { background: var(--navy-mid); transform: translateY(-1px); }
+
+        /* SERVICES STRIP */
+        .services-strip { background: var(--navy); padding: 28px 40px; }
+        .services-strip-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; }
+        .service-item { display: flex; align-items: center; gap: 12px; color: white; }
+        .service-icon { width: 42px; height: 42px; background: rgba(232,169,32,0.15); border: 1px solid rgba(232,169,32,0.3); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--gold); font-size: 1rem; }
+        .service-name { font-weight: 600; font-size: 0.88rem; }
+        .service-desc { font-size: 0.72rem; color: rgba(255,255,255,0.5); }
+        .services-divider { width: 1px; height: 36px; background: rgba(255,255,255,0.12); }
+
+        /* CATALOG */
+        .catalog { max-width: 1200px; margin: 0 auto; padding: 70px 40px; }
+        .section-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 36px; flex-wrap: wrap; gap: 16px; }
+        .section-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+        .section-title { font-family: 'Playfair Display', serif; font-size: clamp(1.6rem, 3vw, 2.3rem); color: var(--navy); font-weight: 700; line-height: 1.2; }
+        .filter-bar { display: flex; gap: 8px; margin-bottom: 32px; flex-wrap: wrap; }
+        .filter-btn { padding: 8px 18px; border-radius: 50px; border: 1.5px solid var(--gray-light); background: white; font-size: 0.82rem; font-weight: 600; cursor: pointer; transition: all 0.2s; color: var(--gray-text); font-family: 'DM Sans', sans-serif; }
+        .filter-btn.active, .filter-btn:hover { background: var(--navy); color: white; border-color: var(--navy); }
+        .view-toggle { display: flex; gap: 4px; background: white; padding: 4px; border-radius: 8px; border: 1.5px solid var(--gray-light); }
+        .view-btn { padding: 7px 11px; border: none; border-radius: 5px; cursor: pointer; background: transparent; color: var(--gray-text); transition: all 0.2s; font-size: 0.85rem; }
+        .view-btn.active { background: var(--navy); color: white; }
+
+        #lista-imoveis { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 24px; }
+        #lista-imoveis.list-view { grid-template-columns: 1fr; }
+
+        .card { background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.06); transition: all 0.3s; cursor: pointer; position: relative; border: 1.5px solid transparent; }
+        .card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(0,0,0,0.12); border-color: rgba(232,169,32,0.3); }
+        .card-img-wrapper { position: relative; overflow: hidden; }
+        .foto-imovel { width: 100%; height: 230px; object-fit: cover; transition: transform 0.5s ease; display: block; }
+        .card:hover .foto-imovel { transform: scale(1.04); }
+        .card-badges { position: absolute; top: 14px; left: 14px; display: flex; gap: 6px; }
+        .badge { padding: 4px 12px; border-radius: 50px; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; }
+        .badge-tipo { background: var(--navy); color: white; }
+        .badge-venda { background: var(--gold); color: var(--navy); }
+        .badge-locacao { background: var(--green); color: white; }
+        .badge-novo { background: #e74c3c; color: white; }
+        .card-fav { position: absolute; top: 14px; right: 14px; width: 36px; height: 36px; background: rgba(255,255,255,0.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; font-size: 0.9rem; color: #ccc; border: none; }
+        .card-fav:hover, .card-fav.active { color: #e74c3c; transform: scale(1.1); }
+        .card-content { padding: 20px; }
+        .card-title { font-family: 'Playfair Display', serif; font-size: 1.05rem; color: var(--navy); font-weight: 700; margin-bottom: 6px; }
+        .card-location { font-size: 0.8rem; color: var(--gray-text); display: flex; align-items: center; gap: 5px; margin-bottom: 14px; }
+        .card-location i { color: var(--gold); font-size: 0.75rem; }
+        .card-features { display: flex; gap: 14px; padding: 12px 0; border-top: 1px solid var(--gray-light); border-bottom: 1px solid var(--gray-light); margin-bottom: 14px; }
+        .card-feature { display: flex; align-items: center; gap: 5px; font-size: 0.78rem; color: var(--gray-text); }
+        .card-feature i { color: var(--navy); font-size: 0.8rem; }
+        .card-footer { display: flex; align-items: center; justify-content: space-between; }
+        .card-price { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: var(--navy); }
+        .card-price small { display: block; font-size: 0.65rem; font-family: 'DM Sans', sans-serif; font-weight: 500; color: var(--gray-text); margin-bottom: 2px; }
+        .btn-card-zap { display: flex; align-items: center; gap: 6px; background: var(--green); color: white; padding: 9px 14px; border-radius: 8px; font-size: 0.78rem; font-weight: 700; text-decoration: none; border: none; cursor: pointer; transition: all 0.2s; }
+        .btn-card-zap:hover { background: #18a348; transform: translateY(-1px); }
+        #lista-imoveis.list-view .card { display: grid; grid-template-columns: 280px 1fr; }
+        #lista-imoveis.list-view .foto-imovel { height: 100%; min-height: 180px; }
+        #lista-imoveis.list-view .card-img-wrapper { height: auto; }
+
+        .empty-state { grid-column: 1 / -1; text-align: center; padding: 60px 20px; color: var(--gray-text); }
+        .empty-state i { font-size: 3rem; margin-bottom: 16px; color: var(--gray-light); display: block; }
+
+        /* MODAL */
+        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 2000; backdrop-filter: blur(4px); overflow-y: auto; padding: 40px 20px; }
+        .modal-overlay.open { display: flex; align-items: flex-start; justify-content: center; }
+        .modal-box { background: white; border-radius: 20px; width: 100%; max-width: 880px; position: relative; overflow: hidden; animation: modalIn 0.3s ease; }
+        @keyframes modalIn { from { opacity: 0; transform: translateY(20px) scale(0.97); } to { opacity: 1; transform: none; } }
+        .modal-close { position: absolute; top: 16px; right: 16px; width: 36px; height: 36px; background: rgba(255,255,255,0.9); border: none; border-radius: 50%; font-size: 1.1rem; cursor: pointer; z-index: 10; display: flex; align-items: center; justify-content: center; color: var(--navy); transition: all 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+        .modal-close:hover { background: white; transform: scale(1.1); }
+        .modal-gallery { position: relative; }
+        .modal-main-img { width: 100%; height: 380px; object-fit: cover; display: block; }
+        .modal-thumbs { display: flex; gap: 8px; padding: 12px; background: var(--navy); overflow-x: auto; }
+        .modal-thumb { width: 80px; height: 60px; object-fit: cover; border-radius: 6px; cursor: pointer; opacity: 0.6; transition: all 0.2s; border: 2px solid transparent; flex-shrink: 0; }
+        .modal-thumb.active, .modal-thumb:hover { opacity: 1; border-color: var(--gold); }
+        .modal-body { padding: 28px 32px; }
+        .modal-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; gap: 20px; flex-wrap: wrap; }
+        .modal-title { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--navy); font-weight: 700; margin-bottom: 6px; }
+        .modal-location { font-size: 0.85rem; color: var(--gray-text); display: flex; align-items: center; gap: 5px; }
+        .modal-price { text-align: right; }
+        .modal-price-value { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--navy); font-weight: 700; }
+        .modal-price-label { font-size: 0.75rem; color: var(--gray-text); }
+        .modal-features { display: flex; flex-wrap: wrap; gap: 10px; padding: 16px 0; border-top: 1px solid var(--gray-light); border-bottom: 1px solid var(--gray-light); margin-bottom: 20px; }
+        .modal-feature { display: flex; align-items: center; gap: 7px; background: var(--off-white); padding: 8px 14px; border-radius: 8px; font-size: 0.82rem; font-weight: 500; }
+        .modal-feature i { color: var(--navy); }
+        .modal-desc { margin-bottom: 24px; }
+        .modal-desc h4 { font-size: 0.8rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gray-text); margin-bottom: 10px; }
+        .modal-desc p { font-size: 0.9rem; line-height: 1.7; color: var(--text); }
+        .modal-map { border-radius: 12px; overflow: hidden; margin-bottom: 24px; }
+        .modal-map h4 { font-size: 0.8rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gray-text); margin-bottom: 10px; }
+        .modal-map iframe { width: 100%; height: 260px; border: none; border-radius: 12px; display: block; }
+        .modal-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+        .btn-zap-modal { flex: 1; min-width: 180px; display: flex; align-items: center; justify-content: center; gap: 10px; background: #25d366; color: white; padding: 15px 24px; border-radius: 10px; font-weight: 700; font-size: 0.95rem; text-decoration: none; transition: all 0.2s; }
+        .btn-zap-modal:hover { background: #1db954; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(37,211,102,0.3); }
+        .btn-share { display: flex; align-items: center; gap: 8px; background: var(--off-white); color: var(--navy); padding: 15px 20px; border-radius: 10px; font-weight: 600; font-size: 0.85rem; border: none; cursor: pointer; transition: all 0.2s; font-family: 'DM Sans', sans-serif; }
+        .btn-share:hover { background: var(--gray-light); }
+
+        /* ─── ANUNCIAR SECTION ─── */
+        .anunciar-section {
+            background: white;
+            padding: 0;
+        }
+
+        .anunciar-hero {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+            padding: 70px 40px 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .anunciar-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: rgba(232,169,32,0.05);
+            border-radius: 50%;
+        }
+
+        .anunciar-hero h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+            color: white;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .anunciar-hero p {
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.65);
+            max-width: 520px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        .anunciar-hero-badges {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 28px;
+            flex-wrap: wrap;
+        }
+
+        .anunciar-hero-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: rgba(255,255,255,0.85);
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .anunciar-hero-badge i { color: var(--gold); }
+
+        /* FORM WRAPPER */
+        .anunciar-form-wrap {
+            max-width: 860px;
+            margin: -36px auto 0;
+            padding: 0 40px 80px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .anunciar-form-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 12px 48px rgba(0,0,0,0.12);
+            overflow: hidden;
+        }
+
+        /* STEPS PROGRESS */
+        .form-steps {
+            display: flex;
+            border-bottom: 1px solid var(--gray-light);
+            background: var(--off-white);
+        }
+
+        .form-step {
+            flex: 1;
+            padding: 16px 12px;
+            text-align: center;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--gray-text);
+            position: relative;
+            cursor: default;
+            transition: all 0.2s;
+        }
+
+        .form-step.active {
+            color: var(--navy);
+            background: white;
+        }
+
+        .form-step.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--gold);
+        }
+
+        .form-step.done {
+            color: var(--green);
+        }
+
+        .form-step-num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: var(--gray-light);
+            color: var(--gray-text);
+            font-size: 0.7rem;
+            font-weight: 700;
+            margin-right: 6px;
+            transition: all 0.2s;
+        }
+
+        .form-step.active .form-step-num {
+            background: var(--navy);
+            color: white;
+        }
+
+        .form-step.done .form-step-num {
+            background: var(--green);
+            color: white;
+        }
+
+        /* FORM PAGES */
+        .form-page { display: none; padding: 32px; }
+        .form-page.active { display: block; }
+
+        .form-page-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            color: var(--navy);
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .form-page-sub {
+            font-size: 0.84rem;
+            color: var(--gray-text);
+            margin-bottom: 28px;
+        }
+
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .form-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+        .form-full { grid-column: 1 / -1; }
+
+        .form-group { display: flex; flex-direction: column; gap: 6px; }
+
+        .form-label {
+            font-size: 0.76rem;
+            font-weight: 600;
+            color: var(--gray-text);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-label span { color: #e74c3c; margin-left: 2px; }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            padding: 11px 14px;
+            border: 1.5px solid var(--gray-light);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-family: 'DM Sans', sans-serif;
+            color: var(--text);
+            background: white;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            width: 100%;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            border-color: var(--navy);
+            box-shadow: 0 0 0 3px rgba(13,27,75,0.08);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+            line-height: 1.6;
+        }
+
+        /* FINALIDADE TOGGLE */
+        .finalidade-toggle {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .finalidade-btn {
+            padding: 16px;
+            border: 2px solid var(--gray-light);
+            border-radius: 12px;
+            background: white;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .finalidade-btn:hover { border-color: var(--navy); }
+
+        .finalidade-btn.active {
+            border-color: var(--gold);
+            background: rgba(232,169,32,0.06);
+        }
+
+        .finalidade-btn i {
+            font-size: 1.4rem;
+            color: var(--gray-text);
+            display: block;
+            margin-bottom: 8px;
+            transition: color 0.2s;
+        }
+
+        .finalidade-btn.active i { color: var(--gold); }
+
+        .finalidade-btn-title {
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--navy);
+        }
+
+        .finalidade-btn-sub {
+            font-size: 0.75rem;
+            color: var(--gray-text);
+            margin-top: 3px;
+        }
+
+        /* PHOTO UPLOAD */
+        .upload-zone {
+            border: 2px dashed var(--gray-light);
+            border-radius: 14px;
+            padding: 36px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.25s;
+            background: var(--off-white);
+            position: relative;
+        }
+
+        .upload-zone:hover,
+        .upload-zone.dragover {
+            border-color: var(--navy);
+            background: rgba(13,27,75,0.03);
+        }
+
+        .upload-zone input[type="file"] {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+        }
+
+        .upload-icon {
+            width: 56px;
+            height: 56px;
+            background: rgba(13,27,75,0.08);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 14px;
+            font-size: 1.4rem;
+            color: var(--navy);
+        }
+
+        .upload-title {
+            font-weight: 700;
+            color: var(--navy);
+            font-size: 0.95rem;
+            margin-bottom: 6px;
+        }
+
+        .upload-sub {
+            font-size: 0.8rem;
+            color: var(--gray-text);
+            line-height: 1.5;
+        }
+
+        .upload-tip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 12px;
+            font-size: 0.75rem;
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        /* PHOTO PREVIEWS */
+        .foto-previews {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 10px;
+            margin-top: 16px;
+        }
+
+        .foto-preview-item {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            aspect-ratio: 1;
+            background: var(--gray-light);
+        }
+
+        .foto-preview-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .foto-preview-item .foto-remove {
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            width: 26px;
+            height: 26px;
+            background: rgba(0,0,0,0.6);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 0.7rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+
+        .foto-preview-item .foto-remove:hover { background: #e74c3c; }
+
+        .foto-preview-item .foto-principal-badge {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+            padding: 8px 6px 6px;
+            font-size: 0.65rem;
+            color: var(--gold);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-align: center;
+        }
+
+        .fotos-counter {
+            font-size: 0.8rem;
+            color: var(--gray-text);
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .fotos-counter span { color: var(--navy); font-weight: 600; }
+
+        /* FORM NAV */
+        .form-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 32px 28px;
+            border-top: 1px solid var(--gray-light);
+            background: var(--off-white);
+        }
+
+        .btn-form-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            color: var(--gray-text);
+            padding: 12px 22px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.88rem;
+            border: 1.5px solid var(--gray-light);
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .btn-form-back:hover { border-color: var(--navy); color: var(--navy); }
+        .btn-form-back:disabled { opacity: 0.4; cursor: not-allowed; }
+
+        .btn-form-next {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--navy);
+            color: white;
+            padding: 12px 28px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.88rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.25s;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .btn-form-next:hover { background: var(--navy-mid); transform: translateY(-1px); }
+
+        .btn-form-submit {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #25d366;
+            color: white;
+            padding: 14px 32px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.25s;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .btn-form-submit:hover { background: #1db954; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(37,211,102,0.3); }
+
+        /* REVIEW CARD */
+        .review-card {
+            background: var(--off-white);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+
+        .review-card-title {
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .review-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+
+        .review-item { }
+
+        .review-item-label {
+            font-size: 0.72rem;
+            color: var(--gray-text);
+            margin-bottom: 2px;
+        }
+
+        .review-item-value {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--navy);
+        }
+
+        .review-fotos-strip {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+
+        .review-foto {
+            width: 70px;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        /* SOBRE */
+        .about { background: white; }
+        .about-inner { max-width: 1200px; margin: 0 auto; padding: 80px 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 70px; align-items: center; }
+        .about-img-wrap { position: relative; }
+        .about-img-wrap img { width: 100%; border-radius: 16px; display: block; aspect-ratio: 4/5; object-fit: cover; object-position: top; }
+        .about-img-badge { position: absolute; bottom: -20px; right: -20px; background: var(--gold); color: var(--navy); padding: 20px; border-radius: 14px; text-align: center; box-shadow: 0 8px 24px rgba(232,169,32,0.4); }
+        .about-img-badge-num { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 900; line-height: 1; }
+        .about-img-badge-text { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.5px; opacity: 0.8; }
+        .about-text h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3vw, 2.4rem); color: var(--navy); font-weight: 700; margin-bottom: 6px; }
+        .about-text .section-label { margin-bottom: 12px; }
+        .about-text p { color: var(--gray-text); font-size: 0.93rem; line-height: 1.8; margin-bottom: 16px; }
+        .creci-badge { display: inline-flex; align-items: center; gap: 10px; background: var(--off-white); border: 1px solid var(--gray-light); padding: 12px 18px; border-radius: 10px; margin-bottom: 24px; }
+        .creci-badge i { color: var(--navy); font-size: 1.1rem; }
+        .creci-badge-text strong { display: block; font-size: 0.82rem; color: var(--navy); }
+        .creci-badge-text span { font-size: 0.72rem; color: var(--gray-text); }
+        .about-badges { display: flex; gap: 12px; flex-wrap: wrap; }
+        .about-badge { display: flex; align-items: center; gap: 10px; background: var(--off-white); border-left: 3px solid var(--gold); padding: 12px 16px; border-radius: 0 8px 8px 0; }
+        .about-badge i { color: var(--gold); font-size: 1.1rem; }
+        .about-badge-label { font-size: 0.8rem; font-weight: 700; color: var(--navy); }
+
+        /* CTA */
+        .cta-section { background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%); padding: 70px 40px; text-align: center; }
+        .cta-section h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3.5vw, 2.8rem); color: white; font-weight: 700; margin-bottom: 12px; }
+        .cta-section p { font-size: 0.95rem; color: rgba(255,255,255,0.65); max-width: 480px; margin: 0 auto 32px; line-height: 1.7; }
+        .cta-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+        .btn-zap-cta { display: inline-flex; align-items: center; gap: 10px; background: #25d366; color: white; padding: 15px 32px; border-radius: 10px; font-weight: 700; font-size: 1rem; text-decoration: none; transition: all 0.25s; }
+        .btn-zap-cta:hover { background: #1db954; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(37,211,102,0.35); }
+
+        /* FOOTER */
+        footer { background: #050d24; color: rgba(255,255,255,0.6); padding: 40px; }
+        .footer-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+        .footer-logo { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: white; font-weight: 700; }
+        .footer-logo span { color: var(--gold); }
+        footer p { font-size: 0.8rem; }
+        footer strong { color: var(--gold); }
+
+        .whatsapp-float { position: fixed; bottom: 28px; right: 28px; width: 56px; height: 56px; background: #25d366; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: white; text-decoration: none; z-index: 900; box-shadow: 0 6px 24px rgba(37,211,102,0.5); animation: pulse 2.5s infinite; }
+        @keyframes pulse { 0%, 100% { box-shadow: 0 6px 24px rgba(37,211,102,0.5); } 50% { box-shadow: 0 6px 36px rgba(37,211,102,0.75), 0 0 0 10px rgba(37,211,102,0.1); } }
+
+        .toast { position: fixed; bottom: 100px; right: 28px; background: var(--navy); color: white; padding: 12px 20px; border-radius: 10px; font-size: 0.85rem; font-weight: 500; z-index: 9999; opacity: 0; transform: translateY(10px); transition: all 0.3s; pointer-events: none; }
+        .toast.show { opacity: 1; transform: translateY(0); }
+
+        .back-top { position: fixed; bottom: 28px; left: 28px; width: 44px; height: 44px; background: white; border: 1.5px solid var(--gray-light); border-radius: 50%; display: none; align-items: center; justify-content: center; cursor: pointer; font-size: 0.9rem; color: var(--navy); z-index: 900; box-shadow: 0 4px 12px rgba(0,0,0,0.1); transition: all 0.2s; text-decoration: none; }
+        .back-top:hover { background: var(--navy); color: white; }
+        .back-top.visible { display: flex; }
+
+        .mobile-nav { position: fixed; top: 70px; left: 0; right: 0; background: var(--navy); padding: 16px 24px; display: none; flex-direction: column; gap: 4px; z-index: 999; border-top: 1px solid rgba(255,255,255,0.1); }
+        .mobile-nav.open { display: flex; }
+        .mobile-nav a { color: rgba(255,255,255,0.85); text-decoration: none; padding: 12px 0; font-size: 0.95rem; font-weight: 500; border-bottom: 1px solid rgba(255,255,255,0.07); }
+        .mobile-nav a:last-child { border-bottom: none; }
+
+        .skeleton { background: linear-gradient(90deg, #f0f0f0 25%, #e8e8e8 50%, #f0f0f0 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 8px; }
+        @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+
+        /* CAMPO EXTRAS CONDICIONAIS */
+        .campo-condicional { display: none; }
+        .campo-condicional.visivel { display: flex; flex-direction: column; gap: 6px; }
+
+        /* CHECKBOXES AMENIDADES */
+        .amenidades-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 8px;
+        }
+
+        .amenidade-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 12px;
+            border: 1.5px solid var(--gray-light);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.83rem;
+            font-weight: 500;
+            color: var(--gray-text);
+        }
+
+        .amenidade-item:hover { border-color: var(--navy); color: var(--navy); }
+        .amenidade-item.checked { border-color: var(--gold); background: rgba(232,169,32,0.06); color: var(--navy); }
+        .amenidade-item i { font-size: 0.85rem; color: var(--gray-text); transition: color 0.2s; }
+        .amenidade-item.checked i { color: var(--gold); }
+        .amenidade-item input { display: none; }
+
+        /* SUCESSO */
+        .form-sucesso {
+            display: none;
+            padding: 60px 32px;
+            text-align: center;
+        }
+
+        .form-sucesso.ativo { display: block; }
+
+        .sucesso-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(29,185,84,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 2rem;
+            color: var(--green);
+        }
+
+        .sucesso-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            color: var(--navy);
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .sucesso-text {
+            color: var(--gray-text);
+            font-size: 0.93rem;
+            line-height: 1.7;
+            max-width: 400px;
+            margin: 0 auto 28px;
+        }
+
+        /* RESPONSIVO */
+        @media (max-width: 900px) {
+            .hero-content { grid-template-columns: 1fr; gap: 32px; padding: 100px 24px 60px; }
+            .hero { height: auto; min-height: 100vh; }
+            .about-inner { grid-template-columns: 1fr; gap: 40px; padding: 60px 24px; }
+            .about-img-badge { right: 0; }
+            .catalog { padding: 50px 24px; }
+            .services-strip-inner { gap: 14px; }
+            .services-divider { display: none; }
+            header { padding: 0 20px; }
+            nav a:not(.nav-cta):not(.nav-anunciar) { display: none; }
+            .hamburger { display: flex; }
+            .anunciar-form-wrap { padding: 0 16px 60px; }
+            .form-grid, .form-grid-3 { grid-template-columns: 1fr; }
+            .form-full { grid-column: 1; }
+            .review-grid { grid-template-columns: 1fr; }
+            .anunciar-hero { padding: 60px 24px 70px; }
+        }
+
+        @media (max-width: 600px) {
+            #lista-imoveis { grid-template-columns: 1fr; }
+            #lista-imoveis.list-view .card { grid-template-columns: 1fr; }
+            #lista-imoveis.list-view .foto-imovel { height: 200px; }
+            .hero-stats { gap: 20px; }
+            .modal-box { border-radius: 14px; }
+            .modal-main-img { height: 250px; }
+            .modal-body { padding: 20px; }
+            .modal-header { flex-direction: column; }
+            .modal-price { text-align: left; }
+            .form-steps { overflow-x: auto; }
+            .form-step { font-size: 0.7rem; padding: 14px 8px; white-space: nowrap; }
+            .finalidade-toggle { grid-template-columns: 1fr; }
+            .form-nav { flex-direction: column; gap: 10px; }
+            .btn-form-back, .btn-form-next, .btn-form-submit { width: 100%; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<!-- HEADER -->
+<header id="site-header">
+    <a href="#" class="logo">
+        <div class="logo-icon">JC</div>
+        <div class="logo-text">
+            <strong>JC Nascimento Imóveis</strong>
+            <span>Belford Roxo · RJ · Desde 1985
+
+            </span>
+        </div>
+    </a>
+
+    <nav id="main-nav">
+        <a href="#catalogo">Imóveis</a>
+        <a href="#anunciar" class="nav-anunciar">
+            <i class="fas fa-plus-circle"></i> Anunciar
+        </a>
+        <a href="#sobre">Sobre</a>
+        <a href="https://wa.me/5521964495359" target="_blank" class="nav-cta">
+            <i class="fab fa-whatsapp"></i> Fale Conosco
+        </a>
+    </nav>
+
+    <div class="hamburger" onclick="toggleMobileNav()" id="hamburger">
+        <span></span><span></span><span></span>
+    </div>
+</header>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobile-nav">
+    <a href="#catalogo" onclick="closeMobileNav()">Imóveis</a>
+    <a href="#anunciar" onclick="closeMobileNav()"><i class="fas fa-plus-circle"></i> Anunciar Imóvel</a>
+    <a href="#sobre" onclick="closeMobileNav()">Sobre Nós</a>
+    <a href="https://wa.me/5521964495359" target="_blank">
+        <i class="fab fa-whatsapp"></i> Falar pelo WhatsApp
+    </a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-content">
+        <div class="hero-left">
+            <div class="hero-badge">
+                <i class="fas fa-map-marker-alt"></i>
+                Belford Roxo & Região · RJ
+            </div>
+            <h1 class="hero-title">
+                Seu novo lar<br>em <em>Belford Roxo</em><br>te espera
+            </h1>
+            <p class="hero-subtitle">
+                Há 41 anos conectando famílias aos seus imóveis ideais. 
+                Segurança jurídica, expertise contábil e atendimento personalizado em cada negócio.
+            </p>
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <span class="hero-stat-num">41</span>
+                    <span class="hero-stat-label">Anos de mercado</span>
+                </div>
+                <div class="hero-stat">
+                    <span class="hero-stat-num">+500</span>
+                    <span class="hero-stat-label">Negócios fechados</span>
+                </div>
+                <div class="hero-stat">
+                    <span class="hero-stat-num">100%</span>
+                    <span class="hero-stat-label">Regularizados</span>
+                </div>
+            </div>
+            <div class="hero-actions">
+                <a href="#catalogo" class="btn-primary">
+                    <i class="fas fa-search"></i> Ver Imóveis
+                </a>
+                <a href="https://wa.me/5521964495359" target="_blank" class="btn-outline">
+                    <i class="fab fa-whatsapp"></i> Falar com Corretor
+                </a>
+            </div>
+        </div>
+
+        <div class="hero-search-card">
+            <p class="search-card-title">Buscar Imóvel</p>
+            <p class="search-card-sub">Encontre exatamente o que você procura</p>
+
+            <div class="search-tabs">
+                <button class="search-tab active" onclick="setTab(this,'comprar')">Comprar</button>
+                <button class="search-tab" onclick="setTab(this,'alugar')">Alugar</button>
+                <button class="search-tab" onclick="setTab(this,'todos')">Todos</button>
+            </div>
+
+            <div class="search-field">
+                <label>Tipo de imóvel</label>
+                <select id="filtro-tipo">
+                    <option value="todos">Todos os tipos</option>
+                    <option value="casa">Casa</option>
+                    <option value="apartamento">Apartamento</option>
+                    <option value="terreno">Terreno</option>
+                    <option value="comercial">Comercial</option>
+                </select>
+            </div>
+
+            <div class="search-field">
+                <label>Bairro ou região</label>
+                <input type="text" id="busca-bairro" placeholder="Ex: Heliópolis, Centro, Areia Branca...">
+            </div>
+
+            <div class="search-fields-row">
+                <div class="search-field">
+                    <label>Preço máximo</label>
+                    <select id="filtro-preco">
+                        <option value="">Qualquer</option>
+                        <option value="200000">Até R$ 200k</option>
+                        <option value="300000">Até R$ 300k</option>
+                        <option value="500000">Até R$ 500k</option>
+                        <option value="1000000">Acima de R$ 500k</option>
+                    </select>
+                </div>
+                <div class="search-field">
+                    <label>Quartos</label>
+                    <select id="filtro-quartos">
+                        <option value="">Qualquer</option>
+                        <option value="1">1+</option>
+                        <option value="2">2+</option>
+                        <option value="3">3+</option>
+                    </select>
+                </div>
+            </div>
+
+            <button class="btn-search" onclick="filtrar()">
+                <i class="fas fa-search"></i> Buscar Imóveis
+            </button>
+        </div>
+    </div>
+</section>
+
+<!-- SERVICES STRIP -->
+<div class="services-strip">
+    <div class="services-strip-inner">
+        <div class="service-item">
+            <div class="service-icon"><i class="fas fa-home"></i></div>
+            <div><div class="service-name">Venda</div><div class="service-desc">Residencial & Comercial</div></div>
+        </div>
+        <div class="services-divider"></div>
+        <div class="service-item">
+            <div class="service-icon"><i class="fas fa-key"></i></div>
+            <div><div class="service-name">Locação</div><div class="service-desc">Gestão completa</div></div>
+        </div>
+        <div class="services-divider"></div>
+        <div class="service-item">
+            <div class="service-icon"><i class="fas fa-file-contract"></i></div>
+            <div><div class="service-name">Regularização</div><div class="service-desc">Documentação legal</div></div>
+        </div>
+        <div class="services-divider"></div>
+        <div class="service-item">
+            <div class="service-icon"><i class="fas fa-balance-scale"></i></div>
+            <div><div class="service-name">Assessoria Jurídica</div><div class="service-desc">Contratos seguros</div></div>
+        </div>
+        <div class="services-divider"></div>
+        <div class="service-item">
+            <div class="service-icon"><i class="fas fa-building"></i></div>
+            <div><div class="service-name">Administração</div><div class="service-desc">Gestão de imóveis</div></div>
+        </div>
+    </div>
+</div>
+
+<!-- CATALOG -->
+<section class="catalog" id="catalogo">
+    <div class="section-header">
+        <div>
+            <p class="section-label">Portfólio</p>
+            <h2 class="section-title">Nossos Imóveis Disponíveis</h2>
+        </div>
+        <div class="view-toggle">
+            <button class="view-btn active" onclick="setView('grid', this)" title="Grade">
+                <i class="fas fa-th"></i>
+            </button>
+            <button class="view-btn" onclick="setView('list', this)" title="Lista">
+                <i class="fas fa-list"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="filter-bar" id="filter-bar">
+        <button class="filter-btn active" onclick="setFilter('todos', this)">Todos</button>
+        <button class="filter-btn" onclick="setFilter('venda', this)">Venda</button>
+        <button class="filter-btn" onclick="setFilter('locacao', this)">Locação</button>
+        <button class="filter-btn" onclick="setFilter('casa', this)">Casas</button>
+        <button class="filter-btn" onclick="setFilter('apartamento', this)">Apartamentos</button>
+    </div>
+
+    <div id="lista-imoveis"></div>
+</section>
+
+<!-- ─── ANUNCIAR IMÓVEL ─── -->
+<section class="anunciar-section" id="anunciar">
+
+    <div class="anunciar-hero">
+        <p class="section-label" style="color:var(--gold-light);margin-bottom:12px">Para proprietários</p>
+        <h2>Anuncie seu imóvel conosco</h2>
+        <p>Preencha o formulário abaixo e nossa equipe entrará em contato para avaliar e divulgar seu imóvel gratuitamente.</p>
+        <div class="anunciar-hero-badges">
+            <div class="anunciar-hero-badge"><i class="fas fa-check-circle"></i> Avaliação gratuita</div>
+            <div class="anunciar-hero-badge"><i class="fas fa-shield-alt"></i> 100% seguro</div>
+            <div class="anunciar-hero-badge"><i class="fas fa-bolt"></i> Resposta rápida</div>
+        </div>
+    </div>
+
+    <div class="anunciar-form-wrap">
+        <div class="anunciar-form-card">
+
+            <!-- STEPS -->
+            <div class="form-steps">
+                <div class="form-step active" id="step-1">
+                    <span class="form-step-num">1</span>Finalidade
+                </div>
+                <div class="form-step" id="step-2">
+                    <span class="form-step-num">2</span>Sobre o Imóvel
+                </div>
+                <div class="form-step" id="step-3">
+                    <span class="form-step-num">3</span>Fotos
+                </div>
+                <div class="form-step" id="step-4">
+                    <span class="form-step-num">4</span>Seus Dados
+                </div>
+                <div class="form-step" id="step-5">
+                    <span class="form-step-num">5</span>Revisão
+                </div>
+            </div>
+
+            <!-- PAGE 1: FINALIDADE -->
+            <div class="form-page active" id="page-1">
+                <p class="form-page-title">O que deseja fazer com seu imóvel?</p>
+                <p class="form-page-sub">Selecione a opção que melhor descreve o que você procura.</p>
+
+                <div class="finalidade-toggle">
+                    <button class="finalidade-btn active" id="btn-venda" onclick="selecionarFinalidade('venda')">
+                        <i class="fas fa-home"></i>
+                        <div class="finalidade-btn-title">Colocar à Venda</div>
+                        <div class="finalidade-btn-sub">Quero vender meu imóvel</div>
+                    </button>
+                    <button class="finalidade-btn" id="btn-locacao" onclick="selecionarFinalidade('locacao')">
+                        <i class="fas fa-key"></i>
+                        <div class="finalidade-btn-title">Colocar para Alugar</div>
+                        <div class="finalidade-btn-sub">Quero locar meu imóvel</div>
+                    </button>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Tipo do imóvel <span>*</span></label>
+                    <select class="form-select" id="an-tipo">
+                        <option value="">Selecione o tipo</option>
+                        <option value="Casa">Casa</option>
+                        <option value="Apartamento">Apartamento</option>
+                        <option value="Terreno / Lote">Terreno / Lote</option>
+                        <option value="Sala Comercial">Sala Comercial</option>
+                        <option value="Loja / Ponto Comercial">Loja / Ponto Comercial</option>
+                        <option value="Galpão / Armazém">Galpão / Armazém</option>
+                        <option value="Sítio / Chácara">Sítio / Chácara</option>
+                        <option value="Outro">Outro</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- PAGE 2: INFORMAÇÕES DO IMÓVEL -->
+            <div class="form-page" id="page-2">
+                <p class="form-page-title">Informações do imóvel</p>
+                <p class="form-page-sub">Quanto mais detalhes, melhor para atrair compradores/inquilinos.</p>
+
+                <div class="form-grid" style="margin-bottom:16px">
+                    <div class="form-group">
+                        <label class="form-label">Endereço / Rua <span>*</span></label>
+                        <input type="text" class="form-input" id="an-endereco" placeholder="Ex: Rua das Flores, 123">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Bairro <span>*</span></label>
+                        <input type="text" class="form-input" id="an-bairro" placeholder="Ex: Heliópolis">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Cidade <span>*</span></label>
+                        <input type="text" class="form-input" id="an-cidade" value="Belford Roxo" placeholder="Ex: Belford Roxo">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Valor pretendido (R$) <span>*</span></label>
+                        <input type="text" class="form-input" id="an-valor" placeholder="Ex: 280.000" oninput="formatarValor(this)">
+                    </div>
+                </div>
+
+                <div class="form-grid-3" style="margin-bottom:16px">
+                    <div class="form-group" id="grupo-quartos">
+                        <label class="form-label">Quartos</label>
+                        <select class="form-select" id="an-quartos">
+                            <option value="">—</option>
+                            <option>1</option><option>2</option><option>3</option>
+                            <option>4</option><option>5+</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="grupo-banheiros">
+                        <label class="form-label">Banheiros</label>
+                        <select class="form-select" id="an-banheiros">
+                            <option value="">—</option>
+                            <option>1</option><option>2</option><option>3</option><option>4+</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Vagas de garagem</label>
+                        <select class="form-select" id="an-vagas">
+                            <option value="Nenhuma">Nenhuma</option>
+                            <option>1</option><option>2</option><option>3+</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-grid" style="margin-bottom:16px">
+                    <div class="form-group">
+                        <label class="form-label">Área total (m²)</label>
+                        <input type="number" class="form-input" id="an-area" placeholder="Ex: 120" min="1">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Área construída (m²)</label>
+                        <input type="number" class="form-input" id="an-area-const" placeholder="Ex: 80" min="1">
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-bottom:16px">
+                    <label class="form-label">Descrição do imóvel</label>
+                    <textarea class="form-textarea" id="an-descricao" placeholder="Descreva as características, diferenciais, reformas recentes, vizinhança..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" style="margin-bottom:10px">Amenidades / Diferenciais</label>
+                    <div class="amenidades-grid" id="amenidades-grid">
+                        <!-- gerado por JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAGE 3: FOTOS -->
+            <div class="form-page" id="page-3">
+                <p class="form-page-title">Fotos do imóvel</p>
+                <p class="form-page-sub">Imóveis com boas fotos recebem até 3x mais interesse. Adicione entre 3 e 20 imagens.</p>
+
+                <div class="upload-zone" id="upload-zone">
+                    <input type="file" id="fotos-input" accept="image/*" multiple onchange="adicionarFotos(event)">
+                    <div class="upload-icon"><i class="fas fa-camera"></i></div>
+                    <div class="upload-title">Clique ou arraste as fotos aqui</div>
+                    <div class="upload-sub">Formatos: JPG, PNG, WEBP · Máximo 20 fotos<br>Resolução mínima recomendada: 800×600px</div>
+                    <div class="upload-tip"><i class="fas fa-star"></i> A primeira foto será a foto de capa</div>
+                </div>
+
+                <div class="foto-previews" id="foto-previews"></div>
+                <div class="fotos-counter" id="fotos-counter" style="display:none">
+                    <span id="fotos-count">0</span> foto(s) selecionada(s)
+                </div>
+            </div>
+
+            <!-- PAGE 4: DADOS DO PROPRIETÁRIO -->
+            <div class="form-page" id="page-4">
+                <p class="form-page-title">Seus dados de contato</p>
+                <p class="form-page-sub">Entraremos em contato pelo WhatsApp para finalizar o anúncio.</p>
+
+                <div class="form-grid" style="margin-bottom:16px">
+                    <div class="form-group">
+                        <label class="form-label">Nome completo <span>*</span></label>
+                        <input type="text" class="form-input" id="an-nome" placeholder="Seu nome">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">WhatsApp <span>*</span></label>
+                        <input type="tel" class="form-input" id="an-whatsapp" placeholder="(21) 99999-9999" oninput="formatarTel(this)">
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-bottom:16px">
+                    <label class="form-label">E-mail</label>
+                    <input type="email" class="form-input" id="an-email" placeholder="seu@email.com">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Melhor horário para contato</label>
+                    <select class="form-select" id="an-horario">
+                        <option value="Qualquer horário">Qualquer horário</option>
+                        <option value="Manhã (8h–12h)">Manhã (8h–12h)</option>
+                        <option value="Tarde (12h–18h)">Tarde (12h–18h)</option>
+                        <option value="Noite (18h–21h)">Noite (18h–21h)</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- PAGE 5: REVISÃO -->
+            <div class="form-page" id="page-5">
+                <p class="form-page-title">Revisão do anúncio</p>
+                <p class="form-page-sub">Confirme os dados antes de enviar. Nosso corretor entrará em contato em breve.</p>
+
+                <div id="review-content"></div>
+            </div>
+
+            <!-- SUCESSO -->
+            <div class="form-sucesso" id="form-sucesso">
+                <div class="sucesso-icon"><i class="fas fa-check"></i></div>
+                <div class="sucesso-title">Anúncio enviado com sucesso!</div>
+                <p class="sucesso-text">Recebemos as informações do seu imóvel. Nossa equipe vai analisar e entrar em contato pelo WhatsApp em até 24 horas.</p>
+                <a href="https://wa.me/5521964495359" target="_blank" class="btn-zap-modal" style="max-width:320px;margin:0 auto">
+                    <i class="fab fa-whatsapp" style="font-size:1.2rem"></i> Confirmar pelo WhatsApp agora
+                </a>
+            </div>
+
+            <!-- NAVEGAÇÃO DO FORM -->
+            <div class="form-nav" id="form-nav">
+                <button class="btn-form-back" id="btn-voltar" onclick="voltarEtapa()" disabled>
+                    <i class="fas fa-arrow-left"></i> Voltar
+                </button>
+                <button class="btn-form-next" id="btn-avancar" onclick="avancarEtapa()">
+                    Continuar <i class="fas fa-arrow-right"></i>
+                </button>
+                <button class="btn-form-submit" id="btn-enviar" onclick="enviarAnuncio()" style="display:none">
+                    <i class="fab fa-whatsapp" style="font-size:1.1rem"></i> Enviar pelo WhatsApp
+                </button>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- SOBRE -->
+<section class="about" id="sobre">
+    <div class="about-inner">
+        <div class="about-img-wrap">
+            <img src="img/rodrigo-j.jpg" alt="Rodrigo José do Nascimento – Corretor CRECI/RJ 40.959"
+                 onerror="this.src='https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=600&q=80'">
+            <div class="about-img-badge">
+                <div class="about-img-badge-num">41</div>
+                <div class="about-img-badge-text">Anos de<br>Experiência</div>
+            </div>
+        </div>
+
+        <div class="about-text">
+            <p class="section-label">Nossa História</p>
+            <h2>Um legado construído<br>com confiança</h2>
+            <br>
+            <div class="creci-badge">
+                <i class="fas fa-id-badge"></i>
+                <div class="creci-badge-text">
+                    <strong>Rodrigo José do Nascimento</strong>
+                    <span>CRECI/RJ 40.959 · Bacharel em Direito · Técnico em Contabilidade</span>
+                </div>
+            </div>
+            <p>A <strong>JC Nascimento Imóveis</strong> nasceu nos anos 80, construída com trabalho árduo, visão de futuro e valores sólidos que atravessaram gerações. São <strong>41 anos de atuação</strong> marcados por resiliência, credibilidade e um profundo conhecimento do mercado imobiliário.</p>
+            <p>Hoje, esse legado segue vivo nas mãos de <strong>Rodrigo</strong>, que carrega com orgulho os ensinamentos do pai e transforma cada desafio em combustível para crescer. Mais do que manter uma história, Rodrigo eleva esse sonho diariamente, modernizando processos, fortalecendo relacionamentos e expandindo horizontes, sem jamais perder a essência que deu origem à empresa.</p>
+            <p>Cada imóvel negociado representa não apenas um negócio fechado, mas a continuidade de um propósito: realizar sonhos, construir confiança e honrar um legado que cresce a cada novo capítulo.</p>
+            <div class="about-badges">
+                <div class="about-badge"><i class="fas fa-history"></i><span class="about-badge-label">41 Anos de Mercado</span></div>
+                <div class="about-badge"><i class="fas fa-gavel"></i><span class="about-badge-label">Assessoria Jurídica</span></div>
+                <div class="about-badge"><i class="fas fa-calculator"></i><span class="about-badge-label">Expertise Contábil</span></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+    <h2>Pronto para dar o próximo passo?</h2>
+    <p>Fale com nosso corretor agora mesmo e encontre o imóvel perfeito em Belford Roxo e região.</p>
+    <div class="cta-actions">
+        <a href="https://wa.me/5521964495359?text=Olá! Gostaria de informações sobre imóveis." target="_blank" class="btn-zap-cta">
+            <i class="fab fa-whatsapp" style="font-size:1.2rem"></i> Chamar no WhatsApp
+        </a>
+        <a href="#catalogo" class="btn-outline" style="background:transparent;border-color:rgba(255,255,255,0.3);color:white;padding:15px 28px;border-radius:10px;font-weight:600;font-size:0.95rem;text-decoration:none;display:inline-flex;align-items:center;gap:8px;">
+            <i class="fas fa-search"></i> Ver Imóveis
+        </a>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-inner">
+        <div>
+            <div class="footer-logo">JC <span>Nascimento</span> Imóveis</div>
+            <p style="margin-top:4px">Belford Roxo, RJ · CRECI/RJ 40.959</p>
+        </div>
+        <p>&copy; 2026 · Desenvolvido por <strong>DuarTech</strong></p>
+    </div>
+</footer>
+
+<a href="https://wa.me/5521964495359?text=Olá! Vi o site e gostaria de informações." class="whatsapp-float" target="_blank" title="Falar no WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+</a>
+
+<a href="#" class="back-top" id="back-top" title="Voltar ao topo">
+    <i class="fas fa-chevron-up"></i>
+</a>
+
+<div class="toast" id="toast"></div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay" onclick="handleOverlayClick(event)">
+    <div class="modal-box" id="modal-box">
+        <button class="modal-close" onclick="fecharModal()">
+            <i class="fas fa-times"></i>
+        </button>
+        <div id="modal-body"></div>
+    </div>
+</div>
+
+<script>
+// ─── DADOS ───────────────────────────────────────────
+/**
+ * ─── CADASTRO DOS IMÓVEIS ──────────────────────────
+ *
+ * Duarte, aqui está o coração dos anúncios do site.
+ *
+ * COMO FUNCIONA A PARTE DAS FOTOS:
+ * 1. Deixe este arquivo index.html no mesmo nível da pasta img.
+ *    Exemplo:
+ *      index.html
+ *      img/
+ *        Apartamento Bom Pastor/
+ *        Apartamento Copa/
+ *        Apartamento Proximo Bauru/
+ *        Casa em Nova Piam/
+ *        Casa Nilopolis/
+ *        Casa lazer/
+ *        Predio a venda/
+ *
+ * 2. Dentro de cada pasta, coloque as fotos em sequência:
+ *      1.jpeg, 2.jpeg, 3.jpeg... até 30.jpeg
+ *
+ * 3. O site monta automaticamente os caminhos das imagens com base no nome da pasta.
+ *    Exemplo: gerarImagensDaPasta("Apartamento Bom Pastor") cria:
+ *      img/Apartamento Bom Pastor/1.jpeg
+ *      img/Apartamento Bom Pastor/2.jpeg
+ *      img/Apartamento Bom Pastor/3.jpeg
+ *
+ * Observação importante:
+ * HTML/JavaScript puro não consegue listar sozinho os arquivos de uma pasta.
+ * Por isso, usamos um padrão numérico fixo: 1.jpeg até 30.jpeg.
+ */
+const PASTA_BASE_FOTOS = 'img';
+const TOTAL_FOTOS_POR_PASTA = 30;
+const EXTENSAO_FOTOS = 'jpeg';
+
+function gerarImagensDaPasta(nomePasta, total = TOTAL_FOTOS_POR_PASTA) {
+    const imagens = [];
+
+    for (let numero = 1; numero <= total; numero++) {
+        imagens.push(`${PASTA_BASE_FOTOS}/${nomePasta}/${numero}.${EXTENSAO_FOTOS}`);
+    }
+
+    return imagens;
+}
+
+function montarLinkWhatsApp(titulo) {
+    const mensagem = `Olá! Vi o anúncio no site e gostaria de mais detalhes sobre: ${titulo}.`;
+    return `https://wa.me/5521964495359?text=${encodeURIComponent(mensagem)}`;
+}
+
+const mapaPadraoBelfordRoxo = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14716.4153214572!2d-43.39991725!3d-22.76088745!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9965126!2sBelford+Roxo+RJ!5e0!3m2!1spt-BR!2sbr";
+
+const imoveis = [
+    {
+        id: 1,
+        tipo: "apartamento",
+        bairro: "Bom Pastor",
+        cidade: "Belford Roxo",
+        finalidade: "venda",
+        titulo: "Apartamento em Bom Pastor",
+        preco: 170000,
+        precoFormatado: "R$ 170.000",
+        quartos: 2,
+        banheiros: 1,
+        area: 0,
+        vagas: 1,
+        novo: true,
+        descricao: ". ExEstrada Belford Roxo, número 907, Bloco 01 - B13, apartamento 3, (primeiro andar), Apartamento de dois quartos, sala, cozinha e banheiro.celente oportunidade para quem busca praticidade, boa localização e atendimento seguro para compra.",
+        pastaFotos: "Apartamento Bom Pastor",
+        imagens: gerarImagensDaPasta("Apartamento Bom Pastor"),
+        linkZap: montarLinkWhatsApp("Apartamento Bom Pastor"),
+        mapaLink: mapaPadraoBelfordRoxo
+    },
+    {
+        id: 2,
+        tipo: "apartamento",
+        bairro: "Copacabana",
+        cidade: "Rio de Janeiro",
+        finalidade: "venda",
+        titulo: "Apartamento em Copacabana",
+        preco: 7200000,
+        precoFormatado: "R$ 7.200.000",
+        quartos: 6,
+        banheiros: 4,
+        area: 400,
+        vagas: 1,
+        novo: false,
+        descricao: "O apto de Copa, na Atlântica, tem 400m², 6 qtos mas só 1 vaga na garagem apesar de ter um contrato em vigor de mais uma vaga alugada de terceiros. Ideal para famílias que desejam morar com conforto e fácil acesso aos principais pontos da cidade.",
+        pastaFotos: "Apartamento Copa",
+        imagens: gerarImagensDaPasta("Apartamento Copa"),
+        linkZap: montarLinkWhatsApp("Apartamento Copa"),
+        mapaLink: mapaPadraoBelfordRoxo
+    },
+    {
+        id: 3,
+        tipo: "apartamento",
+        bairro: "Vila Vitório",
+        cidade: "Belford Roxo",
+        finalidade: "venda",
+        titulo: "Apartamento em Belford ",
+        preco: 300000,
+        precoFormatado: "R$ 300.000",
+        quartos: 2,
+        banheiros: 1,
+        area: 0,
+        vagas: 0,
+        novo: false,
+        descricao: "Vendo dois apartamentos, cada um de 2 quartos, sala, cozinha e banheiro. (Próximo ao Restaurante Bauru, em Belford Roxo). Com localização estratégica e ótimo potencial para moradia ou investimento.",
+        pastaFotos: "Apartamento Proximo Bauru",
+        imagens: gerarImagensDaPasta("Apartamento Proximo Bauru"),
+        linkZap: montarLinkWhatsApp("Apartamento Próximo Bauru"),
+        mapaLink: mapaPadraoBelfordRoxo
+    },
+    {
+        id: 4,
+        tipo: "casa",
+        bairro: "Nova Piam",
+        cidade: "Belford Roxo",
+        finalidade: "venda",
+        titulo: "Casa em Nova Piam",
+        preco: 380000,
+        precoFormatado: "R$ 380.000",
+        quartos: 3,
+        banheiros: 2,
+        area: 0,
+        vagas: 1,
+        novo: true,
+        descricao: "Vendo casa em Nova Piam - próxima a Vila Olímpica - 2 quartos, uma suíte, sala, cozinha, banheiro, área de serviços, área gourmet, piscina, terraço e garagem, ótima opção para quem busca um imóvel residencial em bairro tradicional da região.",
+        pastaFotos: "Casa em Nova Piam",
+        imagens: gerarImagensDaPasta("Casa em Nova Piam"),
+        linkZap: montarLinkWhatsApp("Casa em Nova Piam"),
+        mapaLink: mapaPadraoBelfordRoxo
+    },
+    {
+        id: 5,
+        tipo: "casa",
+        bairro: "Nilópolis",
+        cidade: "Nilópolis",
+        finalidade: "venda",
+        titulo: "Casa em Nilópolis",
+        preco: 300000,
+        precoFormatado: "R$ 300.000",
+        quartos: 2,
+        banheiros: 1,
+        area: 0,
+        vagas: 1,
+        novo: false,
+        descricao: "Vendo casa (sobrado), em Nilópolis de 2 quartos, sala, cozinha e banheiro, garagem. (Com escritura) indicada para quem procura uma oportunidade residencial na Baixada Fluminense.",
+        pastaFotos: "Casa Nilopolis",
+        imagens: gerarImagensDaPasta("Casa Nilopolis"),
+        linkZap: montarLinkWhatsApp("Casa Nilópolis"),
+        mapaLink: mapaPadraoBelfordRoxo
+    },
+    {
+        id: 6,
+        tipo: "Residencial",
+        bairro: "Santa Maria",
+        cidade: "Belford Roxo",
+        finalidade: "venda",
+        titulo: "Prédio à Venda",
+        preco: 450000,
+        precoFormatado: "R$ 450.000",
+        quartos: 1,
+        banheiros: 1,
+        area: 0,
+        vagas: 0,
+        novo: false,
+        descricao: "Vendo prédio com seis apartamentos (dois por andar, no ponto para acabamento), na Rua Breno de Souza Alves, Santa Maria, Belford Roxo, cada um de 1 quarto, sala, cozinha e banheiro. (Com escritura).",
+        pastaFotos: "Predio a venda",
+        imagens: gerarImagensDaPasta("Predio a venda"),
+        linkZap: montarLinkWhatsApp("Prédio à Venda"),
+        mapaLink: mapaPadraoBelfordRoxo
+    }
+];
+
+
+// Normaliza os valores dos imóveis para exibir corretamente no card e no modal.
+// Importante: no JavaScript, use números sem ponto de milhar. Ex: 170000, não 170.000.
+function formatarPrecoImovel(valor, valorFormatado) {
+    if (valorFormatado && valorFormatado !== 'Consulte') return valorFormatado;
+    const numero = Number(valor);
+    if (!numero || Number.isNaN(numero)) return 'Consulte';
+    return numero.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 });
+}
+
+imoveis.forEach(imovel => {
+    imovel.precoFormatado = formatarPrecoImovel(imovel.preco, imovel.precoFormatado);
+});
+
+// ─── STATE ───────────────────────────────────────────
+let filtroAtivo = 'todos';
+let tabAtiva = 'todos';
+let favoritos = JSON.parse(localStorage.getItem('jc_favoritos') || '[]');
+
+// ─── FORM STATE ──────────────────────────────────────
+let etapaAtual = 1;
+const totalEtapas = 5;
+let finalidadeSelecionada = 'venda';
+let fotosAnuncio = [];
+
+const amenidadesLista = [
+    { icon: 'fa-swimming-pool', label: 'Piscina' },
+    { icon: 'fa-fire', label: 'Churrasqueira' },
+    { icon: 'fa-shield-alt', label: 'Portão Eletrônico' },
+    { icon: 'fa-solar-panel', label: 'Energia Solar' },
+    { icon: 'fa-tint', label: 'Poço Artesiano' },
+    { icon: 'fa-dog', label: 'Aceita Pets' },
+    { icon: 'fa-couch', label: 'Mobiliado' },
+    { icon: 'fa-snowflake', label: 'Ar Condicionado' },
+    { icon: 'fa-wifi', label: 'Fibra Óptica' },
+    { icon: 'fa-warehouse', label: 'Depósito / Edícula' },
+    { icon: 'fa-tree', label: 'Quintal / Jardim' },
+    { icon: 'fa-camera', label: 'Câmeras de Segurança' },
+];
+
+// ─── RENDER CARDS ────────────────────────────────────
+function renderCards(lista) {
+    const container = document.getElementById('lista-imoveis');
+    if (lista.length === 0) {
+        container.innerHTML = `<div class="empty-state"><i class="fas fa-home"></i><h3 style="color:var(--navy);margin-bottom:8px">Nenhum imóvel encontrado</h3><p>Tente outros filtros ou entre em contato pelo WhatsApp.</p><a href="https://wa.me/5521964495359" target="_blank" class="btn-primary" style="display:inline-flex;margin-top:20px"><i class="fab fa-whatsapp"></i> Falar com Corretor</a></div>`;
+        return;
+    }
+    container.innerHTML = lista.map(im => {
+        const isFav = favoritos.includes(im.id);
+        const imgSrc = im.imagens[0];
+        const badgeFinalidade = im.finalidade === 'venda' ? `<span class="badge badge-venda">Venda</span>` : `<span class="badge badge-locacao">Locação</span>`;
+        const badgeNovo = im.novo ? `<span class="badge badge-novo">Novo</span>` : '';
+        return `
+        <div class="card" onclick="abrirModal(${im.id})">
+            <div class="card-img-wrapper">
+                <img src="${imgSrc}" alt="${im.titulo}" class="foto-imovel" onerror="this.src='https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=600&q=60'">
+                <div class="card-badges"><span class="badge badge-tipo">${im.tipo}</span>${badgeFinalidade}${badgeNovo}</div>
+                <button class="card-fav ${isFav ? 'active' : ''}" onclick="toggleFav(event, ${im.id})" title="${isFav ? 'Remover dos favoritos' : 'Favoritar'}">
+                    <i class="${isFav ? 'fas' : 'far'} fa-heart"></i>
+                </button>
+            </div>
+            <div class="card-content">
+                <div class="card-title">${im.titulo}</div>
+                <div class="card-location"><i class="fas fa-map-marker-alt"></i>${im.bairro}, ${im.cidade}</div>
+                <div class="card-features">
+                    <span class="card-feature"><i class="fas fa-bed"></i> ${im.quartos} quartos</span>
+                    <span class="card-feature"><i class="fas fa-bath"></i> ${im.banheiros} banheiro${im.banheiros>1?'s':''}</span>
+                    <span class="card-feature"><i class="fas fa-ruler-combined"></i> ${im.area}m²</span>
+                    ${im.vagas ? `<span class="card-feature"><i class="fas fa-car"></i> ${im.vagas} vaga${im.vagas>1?'s':''}</span>` : ''}
+                </div>
+                <div class="card-footer">
+                    <div class="card-price"><small>${im.finalidade === 'locacao' ? 'Aluguel' : 'Valor'}</small>${im.precoFormatado}</div>
+                    <a href="${im.linkZap}" target="_blank" class="btn-card-zap" onclick="event.stopPropagation()"><i class="fab fa-whatsapp"></i> Contato</a>
+                </div>
+            </div>
+        </div>`;
+    }).join('');
+}
+
+function carregarImoveis() {
+    renderCards(imoveis);
+    renderAmenidades();
+}
+
+// ─── FILTROS ─────────────────────────────────────────
+function filtrar() {
+    const tipo = document.getElementById('filtro-tipo').value;
+    const bairro = document.getElementById('busca-bairro').value.trim().toLowerCase();
+    const precoMax = document.getElementById('filtro-preco').value;
+    const quartos = document.getElementById('filtro-quartos').value;
+    let resultado = imoveis.filter(im => {
+        if (tipo !== 'todos' && im.tipo !== tipo) return false;
+        if (bairro && !im.bairro.toLowerCase().includes(bairro) && !im.cidade.toLowerCase().includes(bairro)) return false;
+        if (precoMax && im.preco > parseInt(precoMax)) return false;
+        if (quartos && im.quartos < parseInt(quartos)) return false;
+        if (tabAtiva === 'comprar' && im.finalidade !== 'venda') return false;
+        if (tabAtiva === 'alugar' && im.finalidade !== 'locacao') return false;
+        return true;
+    });
+    renderCards(resultado);
+    document.getElementById('catalogo').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (resultado.length > 0) showToast(`${resultado.length} imóvel${resultado.length > 1 ? 'is' : ''} encontrado${resultado.length > 1 ? 's' : ''}`);
+    else showToast('Nenhum resultado. Tente outros filtros.');
+}
+
+function setFilter(tipo, btn) {
+    filtroAtivo = tipo;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    let resultado = tipo === 'todos' ? imoveis : imoveis.filter(im => im.tipo === tipo || im.finalidade === tipo);
+    renderCards(resultado);
+}
+
+function setTab(btn, tab) {
+    tabAtiva = tab;
+    document.querySelectorAll('.search-tab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+}
+
+function setView(mode, btn) {
+    document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const lista = document.getElementById('lista-imoveis');
+    lista.className = mode === 'list' ? 'list-view' : '';
+}
+
+// ─── FAVORITOS ───────────────────────────────────────
+function toggleFav(event, id) {
+    event.stopPropagation();
+    const idx = favoritos.indexOf(id);
+    if (idx === -1) { favoritos.push(id); showToast('❤ Adicionado aos favoritos!'); }
+    else { favoritos.splice(idx, 1); showToast('Removido dos favoritos'); }
+    localStorage.setItem('jc_favoritos', JSON.stringify(favoritos));
+    const btn = event.currentTarget;
+    btn.classList.toggle('active', favoritos.includes(id));
+    btn.querySelector('i').className = favoritos.includes(id) ? 'fas fa-heart' : 'far fa-heart';
+}
+
+// ─── MODAL ───────────────────────────────────────────
+function abrirModal(id) {
+    const im = imoveis.find(i => i.id === id);
+    if (!im) return;
+    const thumbsHTML = im.imagens.map((src, i) =>
+        `<img src="${src}" class="modal-thumb ${i === 0 ? 'active' : ''}" onerror="this.style.display='none'" onclick="trocarFoto(this, '${src}')" alt="Foto ${i+1}">`
+    ).join('');
+    document.getElementById('modal-body').innerHTML = `
+        <div class="modal-gallery">
+            <img src="${im.imagens[0]}" alt="${im.titulo}" class="modal-main-img" id="modal-main-img" onerror="this.src='https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=800&q=60'">
+            ${im.imagens.length > 1 ? `<div class="modal-thumbs">${thumbsHTML}</div>` : ''}
+        </div>
+        <div class="modal-body">
+            <div class="modal-header">
+                <div>
+                    <h2 class="modal-title">${im.titulo}</h2>
+                    <div class="modal-location"><i class="fas fa-map-marker-alt" style="color:var(--gold)"></i>${im.bairro}, ${im.cidade} – RJ</div>
+                </div>
+                <div class="modal-price">
+                    <div class="modal-price-label">${im.finalidade === 'locacao' ? 'Aluguel' : 'Valor de venda'}</div>
+                    <div class="modal-price-value">${im.precoFormatado}</div>
+                </div>
+            </div>
+            <div class="modal-features">
+                <div class="modal-feature"><i class="fas fa-bed"></i> ${im.quartos} Quartos</div>
+                <div class="modal-feature"><i class="fas fa-bath"></i> ${im.banheiros} Banheiro${im.banheiros>1?'s':''}</div>
+                <div class="modal-feature"><i class="fas fa-ruler-combined"></i> ${im.area}m²</div>
+                ${im.vagas ? `<div class="modal-feature"><i class="fas fa-car"></i> ${im.vagas} Vaga${im.vagas>1?'s':''}</div>` : ''}
+                <div class="modal-feature"><i class="fas fa-tag"></i> ${im.finalidade === 'venda' ? 'Venda' : 'Locação'}</div>
+            </div>
+            <div class="modal-desc"><h4>Sobre o imóvel</h4><p>${im.descricao}</p></div>
+            <div class="modal-map"><h4>Localização aproximada</h4><iframe src="${im.mapaLink}" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+            <div class="modal-actions">
+                <a href="${im.linkZap}" target="_blank" class="btn-zap-modal"><i class="fab fa-whatsapp" style="font-size:1.2rem"></i>Agendar Visita pelo WhatsApp</a>
+                <button class="btn-share" onclick="compartilhar('${im.titulo}')"><i class="fas fa-share-alt"></i> Compartilhar</button>
+                <button class="btn-share" onclick="toggleFavModal(${im.id})" id="fav-modal-btn-${im.id}">
+                    <i class="${favoritos.includes(im.id) ? 'fas' : 'far'} fa-heart" style="color:${favoritos.includes(im.id)?'#e74c3c':'inherit'}"></i>
+                    ${favoritos.includes(im.id) ? 'Salvo' : 'Salvar'}
+                </button>
+            </div>
+        </div>`;
+    document.getElementById('modal-overlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+}
+
+function fecharModal() {
+    document.getElementById('modal-overlay').classList.remove('open');
+    document.body.style.overflow = 'auto';
+}
+
+function handleOverlayClick(e) {
+    if (e.target === document.getElementById('modal-overlay')) fecharModal();
+}
+
+function trocarFoto(thumb, src) {
+    document.getElementById('modal-main-img').src = src;
+    document.querySelectorAll('.modal-thumb').forEach(t => t.classList.remove('active'));
+    thumb.classList.add('active');
+}
+
+function toggleFavModal(id) {
+    const mockEvent = { currentTarget: document.getElementById('fav-modal-btn-' + id), stopPropagation: () => {} };
+    toggleFav(mockEvent, id);
+    const btn = document.getElementById('fav-modal-btn-' + id);
+    if (btn) btn.innerHTML = `<i class="${favoritos.includes(id) ? 'fas' : 'far'} fa-heart" style="color:${favoritos.includes(id)?'#e74c3c':'inherit'}"></i> ${favoritos.includes(id) ? 'Salvo' : 'Salvar'}`;
+}
+
+function compartilhar(titulo) {
+    if (navigator.share) navigator.share({ title: titulo, text: `Veja este imóvel: ${titulo}`, url: window.location.href });
+    else navigator.clipboard.writeText(window.location.href).then(() => showToast('Link copiado!'));
+}
+
+// ─── ANUNCIAR: AMENIDADES ────────────────────────────
+function renderAmenidades() {
+    const grid = document.getElementById('amenidades-grid');
+    if (!grid) return;
+    grid.innerHTML = amenidadesLista.map((a, i) => `
+        <label class="amenidade-item" id="am-label-${i}" onclick="toggleAmenidade(${i})">
+            <input type="checkbox" id="am-${i}">
+            <i class="fas ${a.icon}"></i>
+            ${a.label}
+        </label>
+    `).join('');
+}
+
+function toggleAmenidade(i) {
+    const label = document.getElementById(`am-label-${i}`);
+    const cb = document.getElementById(`am-${i}`);
+    cb.checked = !cb.checked;
+    label.classList.toggle('checked', cb.checked);
+}
+
+function getAmenidadesSelecionadas() {
+    return amenidadesLista
+        .filter((_, i) => document.getElementById(`am-${i}`) && document.getElementById(`am-${i}`).checked)
+        .map(a => a.label);
+}
+
+// ─── ANUNCIAR: FINALIDADE ────────────────────────────
+function selecionarFinalidade(tipo) {
+    finalidadeSelecionada = tipo;
+    document.getElementById('btn-venda').classList.toggle('active', tipo === 'venda');
+    document.getElementById('btn-locacao').classList.toggle('active', tipo === 'locacao');
+}
+
+// ─── ANUNCIAR: FOTOS ─────────────────────────────────
+function adicionarFotos(event) {
+    const files = Array.from(event.target.files);
+    const disponivel = 20 - fotosAnuncio.length;
+    const adicionadas = files.slice(0, disponivel);
+
+    adicionadas.forEach(file => {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            fotosAnuncio.push({ name: file.name, dataUrl: e.target.result });
+            renderFotoPreviews();
+        };
+        reader.readAsDataURL(file);
+    });
+
+    if (files.length > disponivel) showToast(`Máximo de 20 fotos. ${files.length - disponivel} foto(s) ignorada(s).`);
+    event.target.value = '';
+}
+
+function renderFotoPreviews() {
+    const container = document.getElementById('foto-previews');
+    const counter = document.getElementById('fotos-counter');
+    const countEl = document.getElementById('fotos-count');
+
+    container.innerHTML = fotosAnuncio.map((f, i) => `
+        <div class="foto-preview-item">
+            <img src="${f.dataUrl}" alt="Foto ${i+1}">
+            <button class="foto-remove" onclick="removerFoto(${i})"><i class="fas fa-times"></i></button>
+            ${i === 0 ? '<div class="foto-principal-badge"><i class="fas fa-star"></i> Capa</div>' : ''}
+        </div>
+    `).join('');
+
+    counter.style.display = fotosAnuncio.length > 0 ? 'block' : 'none';
+    countEl.textContent = fotosAnuncio.length;
+}
+
+function removerFoto(idx) {
+    fotosAnuncio.splice(idx, 1);
+    renderFotoPreviews();
+}
+
+// ─── DRAG AND DROP ───────────────────────────────────
+const uploadZone = document.getElementById('upload-zone');
+if (uploadZone) {
+    uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('dragover'); });
+    uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('dragover'));
+    uploadZone.addEventListener('drop', e => {
+        e.preventDefault();
+        uploadZone.classList.remove('dragover');
+        const fakeEvent = { target: { files: e.dataTransfer.files, value: '' } };
+        adicionarFotos(fakeEvent);
+    });
+}
+
+// ─── FORMATAÇÃO ──────────────────────────────────────
+function formatarValor(input) {
+    let v = input.value.replace(/\D/g, '');
+    if (v) {
+        v = parseInt(v).toLocaleString('pt-BR');
+        input.value = v;
+    }
+}
+
+function formatarTel(input) {
+    let v = input.value.replace(/\D/g, '');
+    if (v.length <= 10) v = v.replace(/(\d{2})(\d{4})(\d{0,4})/, '($1) $2-$3');
+    else v = v.replace(/(\d{2})(\d{5})(\d{0,4})/, '($1) $2-$3');
+    input.value = v.trim().replace(/-$/, '');
+}
+
+// ─── FORM NAVIGATION ─────────────────────────────────
+function avancarEtapa() {
+    if (!validarEtapa(etapaAtual)) return;
+
+    if (etapaAtual === 4) {
+        gerarReview();
+    }
+
+    document.getElementById(`page-${etapaAtual}`).classList.remove('active');
+    document.getElementById(`step-${etapaAtual}`).classList.remove('active');
+    document.getElementById(`step-${etapaAtual}`).classList.add('done');
+
+    etapaAtual++;
+
+    document.getElementById(`page-${etapaAtual}`).classList.add('active');
+    document.getElementById(`step-${etapaAtual}`).classList.add('active');
+
+    document.getElementById('btn-voltar').disabled = etapaAtual === 1;
+
+    if (etapaAtual === totalEtapas) {
+        document.getElementById('btn-avancar').style.display = 'none';
+        document.getElementById('btn-enviar').style.display = 'flex';
+    }
+
+    document.getElementById('anunciar').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function voltarEtapa() {
+    if (etapaAtual === 1) return;
+
+    document.getElementById(`page-${etapaAtual}`).classList.remove('active');
+    document.getElementById(`step-${etapaAtual}`).classList.remove('active');
+
+    etapaAtual--;
+
+    document.getElementById(`page-${etapaAtual}`).classList.add('active');
+    document.getElementById(`step-${etapaAtual}`).classList.add('active');
+    document.getElementById(`step-${etapaAtual}`).classList.remove('done');
+
+    document.getElementById('btn-voltar').disabled = etapaAtual === 1;
+    document.getElementById('btn-avancar').style.display = 'flex';
+    document.getElementById('btn-enviar').style.display = 'none';
+}
+
+function validarEtapa(etapa) {
+    if (etapa === 1) {
+        const tipo = document.getElementById('an-tipo').value;
+        if (!tipo) { showToast('⚠ Selecione o tipo do imóvel'); return false; }
+    }
+    if (etapa === 2) {
+        const endereco = document.getElementById('an-endereco').value.trim();
+        const bairro = document.getElementById('an-bairro').value.trim();
+        const valor = document.getElementById('an-valor').value.trim();
+        if (!endereco) { showToast('⚠ Informe o endereço do imóvel'); return false; }
+        if (!bairro) { showToast('⚠ Informe o bairro'); return false; }
+        if (!valor) { showToast('⚠ Informe o valor pretendido'); return false; }
+    }
+    if (etapa === 3) {
+        if (fotosAnuncio.length === 0) { showToast('⚠ Adicione pelo menos 1 foto do imóvel'); return false; }
+    }
+    if (etapa === 4) {
+        const nome = document.getElementById('an-nome').value.trim();
+        const whatsapp = document.getElementById('an-whatsapp').value.trim();
+        if (!nome) { showToast('⚠ Informe seu nome'); return false; }
+        if (!whatsapp || whatsapp.replace(/\D/g,'').length < 10) { showToast('⚠ Informe um WhatsApp válido'); return false; }
+    }
+    return true;
+}
+
+function gerarReview() {
+    const tipo = document.getElementById('an-tipo').value;
+    const endereco = document.getElementById('an-endereco').value;
+    const bairro = document.getElementById('an-bairro').value;
+    const cidade = document.getElementById('an-cidade').value;
+    const valor = document.getElementById('an-valor').value;
+    const quartos = document.getElementById('an-quartos').value || '—';
+    const banheiros = document.getElementById('an-banheiros').value || '—';
+    const vagas = document.getElementById('an-vagas').value || '—';
+    const area = document.getElementById('an-area').value || '—';
+    const descricao = document.getElementById('an-descricao').value || '—';
+    const nome = document.getElementById('an-nome').value;
+    const whatsapp = document.getElementById('an-whatsapp').value;
+    const email = document.getElementById('an-email').value || '—';
+    const horario = document.getElementById('an-horario').value;
+    const amenidades = getAmenidadesSelecionadas();
+
+    const fotosHtml = fotosAnuncio.slice(0, 6).map((f, i) =>
+        `<img src="${f.dataUrl}" class="review-foto" alt="Foto ${i+1}">`
+    ).join('') + (fotosAnuncio.length > 6 ? `<div style="display:flex;align-items:center;justify-content:center;width:70px;height:70px;background:var(--gray-light);border-radius:8px;font-size:0.8rem;font-weight:700;color:var(--gray-text)">+${fotosAnuncio.length - 6}</div>` : '');
+
+    document.getElementById('review-content').innerHTML = `
+        <div class="review-card">
+            <div class="review-card-title"><i class="fas fa-tag"></i> Finalidade & Tipo</div>
+            <div class="review-grid">
+                <div class="review-item"><div class="review-item-label">Finalidade</div><div class="review-item-value">${finalidadeSelecionada === 'venda' ? '🏠 Venda' : '🔑 Locação'}</div></div>
+                <div class="review-item"><div class="review-item-label">Tipo</div><div class="review-item-value">${tipo}</div></div>
+            </div>
+        </div>
+        <div class="review-card">
+            <div class="review-card-title"><i class="fas fa-map-marker-alt"></i> Localização & Valor</div>
+            <div class="review-grid">
+                <div class="review-item"><div class="review-item-label">Endereço</div><div class="review-item-value">${endereco}</div></div>
+                <div class="review-item"><div class="review-item-label">Bairro / Cidade</div><div class="review-item-value">${bairro}, ${cidade}</div></div>
+                <div class="review-item"><div class="review-item-label">Valor</div><div class="review-item-value" style="color:var(--gold)">R$ ${valor}</div></div>
+            </div>
+        </div>
+        <div class="review-card">
+            <div class="review-card-title"><i class="fas fa-home"></i> Características</div>
+            <div class="review-grid">
+                <div class="review-item"><div class="review-item-label">Quartos</div><div class="review-item-value">${quartos}</div></div>
+                <div class="review-item"><div class="review-item-label">Banheiros</div><div class="review-item-value">${banheiros}</div></div>
+                <div class="review-item"><div class="review-item-label">Vagas</div><div class="review-item-value">${vagas}</div></div>
+                <div class="review-item"><div class="review-item-label">Área (m²)</div><div class="review-item-value">${area}</div></div>
+            </div>
+            ${amenidades.length > 0 ? `<div style="margin-top:12px;font-size:0.82rem;color:var(--gray-text)">${amenidades.map(a => `<span style="display:inline-block;background:rgba(232,169,32,0.12);border:1px solid rgba(232,169,32,0.3);color:var(--navy);padding:3px 10px;border-radius:50px;margin:3px;font-size:0.75rem;font-weight:600">${a}</span>`).join('')}</div>` : ''}
+        </div>
+        <div class="review-card">
+            <div class="review-card-title"><i class="fas fa-camera"></i> Fotos (${fotosAnuncio.length})</div>
+            <div class="review-fotos-strip">${fotosHtml}</div>
+        </div>
+        <div class="review-card">
+            <div class="review-card-title"><i class="fas fa-user"></i> Seus dados</div>
+            <div class="review-grid">
+                <div class="review-item"><div class="review-item-label">Nome</div><div class="review-item-value">${nome}</div></div>
+                <div class="review-item"><div class="review-item-label">WhatsApp</div><div class="review-item-value">${whatsapp}</div></div>
+                <div class="review-item"><div class="review-item-label">E-mail</div><div class="review-item-value">${email}</div></div>
+                <div class="review-item"><div class="review-item-label">Melhor horário</div><div class="review-item-value">${horario}</div></div>
+            </div>
+        </div>
+    `;
+}
+
+function enviarAnuncio() {
+    const tipo = document.getElementById('an-tipo').value;
+    const endereco = document.getElementById('an-endereco').value;
+    const bairro = document.getElementById('an-bairro').value;
+    const cidade = document.getElementById('an-cidade').value;
+    const valor = document.getElementById('an-valor').value;
+    const quartos = document.getElementById('an-quartos').value || 'Não informado';
+    const banheiros = document.getElementById('an-banheiros').value || 'Não informado';
+    const vagas = document.getElementById('an-vagas').value || 'Não informado';
+    const area = document.getElementById('an-area').value || 'Não informado';
+    const descricao = document.getElementById('an-descricao').value || 'Não informado';
+    const nome = document.getElementById('an-nome').value;
+    const whatsapp = document.getElementById('an-whatsapp').value;
+    const email = document.getElementById('an-email').value || 'Não informado';
+    const horario = document.getElementById('an-horario').value;
+    const amenidades = getAmenidadesSelecionadas();
+
+    const finalidade = finalidadeSelecionada === 'venda' ? 'VENDA' : 'LOCAÇÃO';
+
+    const mensagem = `*NOVO ANÚNCIO — JC Nascimento Imóveis*
+
+*Finalidade:* ${finalidade}
+*Tipo:* ${tipo}
+
+*📍 Localização*
+Endereço: ${endereco}
+Bairro: ${bairro} | Cidade: ${cidade}
+
+*💰 Valor pretendido:* R$ ${valor}
+
+*🏠 Características*
+Quartos: ${quartos}
+Banheiros: ${banheiros}
+Vagas de garagem: ${vagas}
+Área: ${area}m²
+
+*✨ Amenidades:* ${amenidades.length > 0 ? amenidades.join(', ') : 'Nenhuma selecionada'}
+
+*📝 Descrição:*
+${descricao}
+
+*📷 Fotos:* ${fotosAnuncio.length} foto(s) disponível(is) — enviarei pelo chat
+
+*👤 Dados do proprietário*
+Nome: ${nome}
+WhatsApp: ${whatsapp}
+E-mail: ${email}
+Melhor horário: ${horario}`;
+
+    const url = `https://wa.me/5521964495359?text=${encodeURIComponent(mensagem)}`;
+
+    // Mostrar sucesso
+    document.getElementById(`page-${etapaAtual}`).classList.remove('active');
+    document.getElementById(`step-${etapaAtual}`).classList.remove('active');
+    document.getElementById(`step-${etapaAtual}`).classList.add('done');
+    document.getElementById('form-sucesso').classList.add('ativo');
+    document.getElementById('form-nav').style.display = 'none';
+
+    window.open(url, '_blank');
+}
+
+// ─── TOAST ───────────────────────────────────────────
+function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// ─── HEADER SCROLL ───────────────────────────────────
+window.addEventListener('scroll', () => {
+    const scrolled = window.scrollY;
+    document.getElementById('site-header').classList.toggle('scrolled', scrolled > 60);
+    document.getElementById('back-top').classList.toggle('visible', scrolled > 400);
+    const total = document.documentElement.scrollHeight - window.innerHeight;
+    document.getElementById('progress-bar').style.width = ((scrolled / total) * 100) + '%';
+});
+
+// ─── MOBILE NAV ──────────────────────────────────────
+function toggleMobileNav() {
+    document.getElementById('mobile-nav').classList.toggle('open');
+}
+function closeMobileNav() {
+    document.getElementById('mobile-nav').classList.remove('open');
+}
+
+// ─── KEYBOARD ────────────────────────────────────────
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') fecharModal();
+});
+
+// ─── INIT ─────────────────────────────────────────────
+window.onload = carregarImoveis;
+</script>
+</body>
+</html>
