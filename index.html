@@ -827,7 +827,611 @@
             .form-nav { flex-direction: column; gap: 10px; }
             .btn-form-back, .btn-form-next, .btn-form-submit { width: 100%; justify-content: center; }
         }
-    </style>
+    
+
+        /* =========================================================
+           ARQUITETURA MOBILE-FIRST - AJUSTES PARA CELULAR
+           Prioridade: leitura fácil, botões grandes, imagens 9:16 e zero corte
+        ========================================================= */
+
+        @media (max-width: 768px) {
+            html, body {
+                width: 100%;
+                overflow-x: hidden;
+            }
+
+            body {
+                background: var(--off-white);
+            }
+
+            /* HEADER MOBILE */
+            header {
+                height: 64px;
+                padding: 0 14px;
+            }
+
+            header.scrolled {
+                height: 58px;
+            }
+
+            .logo {
+                gap: 8px;
+                max-width: calc(100% - 52px);
+            }
+
+            .logo-icon {
+                width: 36px;
+                height: 36px;
+                font-size: 0.95rem;
+                flex-shrink: 0;
+            }
+
+            .logo-text strong {
+                font-size: 0.82rem;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 215px;
+            }
+
+            .logo-text span {
+                font-size: 0.54rem;
+                letter-spacing: 1px;
+                display: block;
+                max-width: 215px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            #main-nav {
+                display: none;
+            }
+
+            .hamburger {
+                display: flex;
+                min-width: 42px;
+                min-height: 42px;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .mobile-nav {
+                top: 64px;
+                padding: 14px 18px 18px;
+                box-shadow: 0 12px 26px rgba(0,0,0,0.22);
+            }
+
+            .mobile-nav a {
+                font-size: 0.95rem;
+                padding: 14px 2px;
+            }
+
+            /* HERO MOBILE */
+            .hero {
+                height: auto;
+                min-height: auto;
+                padding: 92px 0 36px;
+                align-items: flex-start;
+            }
+
+            .hero::before {
+                height: 70px;
+            }
+
+            .hero-content {
+                display: flex;
+                flex-direction: column;
+                gap: 22px;
+                padding: 0 16px;
+            }
+
+            .hero-left {
+                text-align: center;
+            }
+
+            .hero-badge {
+                font-size: 0.65rem;
+                padding: 6px 12px;
+                margin-bottom: 16px;
+                letter-spacing: 1px;
+            }
+
+            .hero-title {
+                font-size: clamp(2rem, 10vw, 2.7rem);
+                line-height: 1.08;
+                margin-bottom: 14px;
+            }
+
+            .hero-subtitle {
+                max-width: 100%;
+                font-size: 0.92rem;
+                line-height: 1.55;
+                margin-bottom: 22px;
+            }
+
+            .hero-stats {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 8px;
+                margin-bottom: 22px;
+            }
+
+            .hero-stat {
+                background: rgba(255,255,255,0.08);
+                border: 1px solid rgba(255,255,255,0.12);
+                border-radius: 12px;
+                padding: 12px 6px;
+            }
+
+            .hero-stat-num {
+                font-size: 1.45rem;
+            }
+
+            .hero-stat-label {
+                font-size: 0.63rem;
+                line-height: 1.2;
+            }
+
+            .hero-actions {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .btn-primary,
+            .btn-outline,
+            .btn-search,
+            .btn-card-zap,
+            .btn-zap-modal,
+            .btn-share,
+            .btn-form-back,
+            .btn-form-next,
+            .btn-form-submit {
+                min-height: 48px;
+                justify-content: center;
+                width: 100%;
+                touch-action: manipulation;
+            }
+
+            /* BUSCA MOBILE */
+            .hero-search-card {
+                width: 100%;
+                padding: 18px;
+                border-radius: 16px;
+                box-shadow: 0 10px 34px rgba(0,0,0,0.2);
+            }
+
+            .search-card-title {
+                font-size: 1.12rem;
+            }
+
+            .search-card-sub {
+                font-size: 0.78rem;
+                margin-bottom: 16px;
+            }
+
+            .search-tabs {
+                gap: 4px;
+                margin-bottom: 16px;
+            }
+
+            .search-tab {
+                min-height: 42px;
+                font-size: 0.78rem;
+            }
+
+            .search-fields-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .search-field select,
+            .search-field input,
+            .form-input,
+            .form-select,
+            .form-textarea {
+                min-height: 46px;
+                font-size: 16px; /* evita zoom automático no iPhone */
+            }
+
+            /* FAIXA DE SERVIÇOS MOBILE */
+            .services-strip {
+                padding: 18px 16px;
+            }
+
+            .services-strip-inner {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .service-item {
+                background: rgba(255,255,255,0.06);
+                border: 1px solid rgba(255,255,255,0.08);
+                border-radius: 12px;
+                padding: 12px;
+            }
+
+            .services-divider {
+                display: none;
+            }
+
+            /* CATÁLOGO MOBILE */
+            .catalog {
+                padding: 42px 16px;
+            }
+
+            .section-header {
+                align-items: flex-start;
+                margin-bottom: 22px;
+            }
+
+            .section-title {
+                font-size: 1.75rem;
+            }
+
+            .view-toggle {
+                display: none; /* no celular, grade única é melhor */
+            }
+
+            .filter-bar {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                padding-bottom: 10px;
+                margin-bottom: 22px;
+                scroll-snap-type: x mandatory;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .filter-btn {
+                flex: 0 0 auto;
+                min-height: 40px;
+                scroll-snap-align: start;
+            }
+
+            #lista-imoveis,
+            #lista-imoveis.list-view {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 18px;
+            }
+
+            #lista-imoveis.list-view .card {
+                display: block;
+            }
+
+            .card {
+                border-radius: 18px;
+                box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+            }
+
+            .card:hover {
+                transform: none;
+            }
+
+            .card-img-wrapper {
+                width: 100%;
+                aspect-ratio: 9 / 16;
+                background: #050d24;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                overflow: hidden;
+            }
+
+            .foto-imovel,
+            #lista-imoveis.list-view .foto-imovel {
+                width: 100%;
+                height: 100%;
+                min-height: 0;
+                object-fit: contain;
+                object-position: center;
+                background: #050d24;
+            }
+
+            .card:hover .foto-imovel {
+                transform: none;
+            }
+
+            .card-badges {
+                top: 10px;
+                left: 10px;
+                right: 54px;
+                flex-wrap: wrap;
+            }
+
+            .card-fav {
+                top: 10px;
+                right: 10px;
+                width: 38px;
+                height: 38px;
+            }
+
+            .card-content {
+                padding: 16px;
+            }
+
+            .card-title {
+                font-size: 1.16rem;
+            }
+
+            .card-features {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 8px;
+            }
+
+            .card-feature {
+                justify-content: center;
+                background: var(--off-white);
+                border-radius: 8px;
+                padding: 8px 4px;
+                font-size: 0.72rem;
+            }
+
+            .card-footer {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 12px;
+            }
+
+            .card-price {
+                font-size: 1.45rem;
+            }
+
+            /* MODAL MOBILE */
+            .modal-overlay {
+                padding: 0;
+                align-items: stretch;
+            }
+
+            .modal-overlay.open {
+                align-items: stretch;
+            }
+
+            .modal-box {
+                width: 100%;
+                max-width: none;
+                min-height: 100vh;
+                border-radius: 0;
+            }
+
+            .modal-close {
+                top: 12px;
+                right: 12px;
+                width: 42px;
+                height: 42px;
+            }
+
+            .modal-gallery {
+                background: #050d24;
+            }
+
+            .modal-main-img {
+                width: 100%;
+                height: auto;
+                aspect-ratio: 9 / 16;
+                object-fit: contain;
+                object-position: center;
+                background: #050d24;
+            }
+
+            .modal-thumbs {
+                padding: 10px;
+                gap: 8px;
+            }
+
+            .modal-thumb {
+                width: 64px;
+                height: 64px;
+                object-fit: contain;
+                background: rgba(255,255,255,0.08);
+            }
+
+            .modal-body {
+                padding: 18px 16px 96px;
+            }
+
+            .modal-header {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .modal-title {
+                font-size: 1.35rem;
+            }
+
+            .modal-price {
+                text-align: left;
+            }
+
+            .modal-price-value {
+                font-size: 1.55rem;
+            }
+
+            .modal-features {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .modal-map iframe {
+                height: 220px;
+            }
+
+            .modal-actions {
+                position: fixed;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                padding: 12px 14px calc(12px + env(safe-area-inset-bottom));
+                background: rgba(255,255,255,0.96);
+                box-shadow: 0 -8px 22px rgba(0,0,0,0.12);
+                z-index: 20;
+            }
+
+            /* FORMULÁRIO MOBILE */
+            .anunciar-hero {
+                padding: 48px 16px 64px;
+            }
+
+            .anunciar-hero h2 {
+                font-size: 1.85rem;
+            }
+
+            .anunciar-hero-badges {
+                gap: 8px;
+            }
+
+            .anunciar-hero-badge {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .anunciar-form-wrap {
+                padding: 0 12px 50px;
+                margin-top: -30px;
+            }
+
+            .anunciar-form-card {
+                border-radius: 16px;
+            }
+
+            .form-steps {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .form-step {
+                flex: 0 0 auto;
+                min-width: 132px;
+                padding: 14px 10px;
+                font-size: 0.72rem;
+            }
+
+            .form-page {
+                padding: 22px 16px;
+            }
+
+            .form-grid,
+            .form-grid-3,
+            .review-grid,
+            .finalidade-toggle {
+                grid-template-columns: 1fr;
+            }
+
+            .form-full {
+                grid-column: 1;
+            }
+
+            .amenidades-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .foto-previews {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .foto-preview-item {
+                aspect-ratio: 9 / 16;
+                background: #050d24;
+            }
+
+            .foto-preview-item img,
+            .review-foto {
+                object-fit: contain;
+                background: #050d24;
+            }
+
+            .form-nav {
+                flex-direction: column;
+                gap: 10px;
+                padding: 16px;
+            }
+
+            /* SOBRE E CTA MOBILE */
+            .about-inner {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                padding: 48px 16px;
+            }
+
+            .about-text h2 {
+                font-size: 1.8rem;
+            }
+
+            .about-text p {
+                font-size: 0.92rem;
+                line-height: 1.7;
+            }
+
+            .about-img-wrap img {
+                aspect-ratio: 9 / 16;
+                object-fit: contain;
+                background: #050d24;
+            }
+
+            .about-img-badge {
+                right: 8px;
+                bottom: -14px;
+                padding: 14px;
+            }
+
+            .cta-section {
+                padding: 52px 16px;
+            }
+
+            .cta-actions {
+                display: grid;
+                grid-template-columns: 1fr;
+            }
+
+            footer {
+                padding: 30px 16px 90px;
+                text-align: center;
+            }
+
+            .footer-inner {
+                justify-content: center;
+                text-align: center;
+            }
+
+            .whatsapp-float {
+                width: 54px;
+                height: 54px;
+                right: 16px;
+                bottom: 18px;
+            }
+
+            .back-top {
+                left: 16px;
+                bottom: 22px;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .card-img-wrapper {
+                aspect-ratio: 16 / 9;
+                background: #050d24;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .foto-imovel {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+                object-position: center;
+                background: #050d24;
+            }
+
+            .modal-main-img {
+                object-fit: contain;
+                background: #050d24;
+            }
+        }
+</style>
 </head>
 <body>
 
