@@ -2028,16 +2028,57 @@
  */
 const PASTA_BASE_FOTOS = 'img';
 const TOTAL_FOTOS_POR_PASTA = 30;
-const EXTENSAO_FOTOS = 'jpeg';
+const EXTENSOES_FOTOS = ['jpeg', 'JPEG', 'jpg', 'JPG', 'png', 'PNG', 'webp', 'WEBP'];
+const FOTO_FALLBACK = 'https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=800&q=60';
 
-function gerarImagensDaPasta(nomePasta, total = TOTAL_FOTOS_POR_PASTA) {
+function gerarCaminhoFoto(nomePasta, numero, extensao) {
+    return `${PASTA_BASE_FOTOS}/${nomePasta}/${numero}.${extensao}`;
+}
+
+function testarImagem(src) {
+    return new Promise(resolve => {
+        const img = new Image();
+        img.onload = () => resolve(src);
+        img.onerror = () => resolve(null);
+        img.src = src;
+    });
+}
+
+async function encontrarFotoExistente(nomePasta, numero) {
+    for (const extensao of EXTENSOES_FOTOS) {
+        const src = gerarCaminhoFoto(nomePasta, numero, extensao);
+        const encontrada = await testarImagem(src);
+        if (encontrada) return encontrada;
+    }
+    return null;
+}
+
+async function identificarFotosDaPasta(nomePasta, total = TOTAL_FOTOS_POR_PASTA) {
     const imagens = [];
 
     for (let numero = 1; numero <= total; numero++) {
-        imagens.push(`${PASTA_BASE_FOTOS}/${nomePasta}/${numero}.${EXTENSAO_FOTOS}`);
+        const foto = await encontrarFotoExistente(nomePasta, numero);
+        if (foto) imagens.push(foto);
     }
 
+    return imagens.length ? imagens : [FOTO_FALLBACK];
+}
+
+function gerarImagensDaPasta(nomePasta, total = TOTAL_FOTOS_POR_PASTA) {
+    // Lista provisória para o HTML já ter referência inicial.
+    // Ao carregar o site, identificarFotosDosImoveis() troca isso somente pelas fotos que existem de verdade.
+    const imagens = [];
+    for (let numero = 1; numero <= total; numero++) {
+        imagens.push(gerarCaminhoFoto(nomePasta, numero, 'jpeg'));
+    }
     return imagens;
+}
+
+async function identificarFotosDosImoveis() {
+    await Promise.all(imoveis.map(async imovel => {
+        if (!imovel.pastaFotos) return;
+        imovel.imagens = await identificarFotosDaPasta(imovel.pastaFotos);
+    }));
 }
 
 function montarLinkWhatsApp(titulo) {
@@ -2256,7 +2297,7 @@ function renderCards(lista) {
         return `
         <div class="card" onclick="abrirModal(${im.id})">
             <div class="card-img-wrapper">
-                <img src="${imgSrc}" alt="${im.titulo}" class="foto-imovel" id="card-img-${im.id}" data-index="0" onerror="this.src='https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=600&q=60'">
+                <img src="${imgSrc}" alt="${im.titulo}" class="foto-imovel" id="card-img-${im.id}" data-index="0" onerror="this.src=FOTO_FALLBACK">
                 ${temGaleria ? `
                     <button class="card-gallery-btn prev" onclick="trocarFotoCard(event, ${im.id}, -1)" title="Foto anterior"><i class="fas fa-chevron-left"></i></button>
                     <button class="card-gallery-btn next" onclick="trocarFotoCard(event, ${im.id}, 1)" title="Próxima foto"><i class="fas fa-chevron-right"></i></button>
@@ -2308,7 +2349,13 @@ function trocarFotoCard(event, id, direcao) {
     if (counter) counter.textContent = `${novo + 1}/${im.imagens.length}`;
 }
 
-function carregarImoveis() {
+async function carregarImoveis() {
+    const container = document.getElementById('lista-imoveis');
+    if (container) {
+        container.innerHTML = `<div class="empty-state"><i class="fas fa-spinner fa-spin"></i><h3 style="color:var(--navy);margin-bottom:8px">Carregando fotos dos imóveis...</h3><p>Validando automaticamente as imagens disponíveis nas pastas.</p></div>`;
+    }
+
+    await identificarFotosDosImoveis();
     renderCards(imoveis);
     renderAmenidades();
 }
@@ -2382,7 +2429,7 @@ function abrirModal(id) {
 
     document.getElementById('modal-body').innerHTML = `
         <div class="modal-gallery">
-            <img src="${im.imagens[0]}" alt="${im.titulo}" class="modal-main-img" id="modal-main-img" onerror="this.src='https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=800&q=60'">
+            <img src="${im.imagens[0]}" alt="${im.titulo}" class="modal-main-img" id="modal-main-img" onerror="this.src=FOTO_FALLBACK">
             ${im.imagens.length > 1 ? `
                 <button class="modal-gallery-btn prev" onclick="navegarFotoModal(event, -1)" title="Foto anterior"><i class="fas fa-chevron-left"></i></button>
                 <button class="modal-gallery-btn next" onclick="navegarFotoModal(event, 1)" title="Próxima foto"><i class="fas fa-chevron-right"></i></button>
