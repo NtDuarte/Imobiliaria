@@ -137,6 +137,63 @@
         .empty-state { grid-column: 1 / -1; text-align: center; padding: 60px 20px; color: var(--gray-text); }
         .empty-state i { font-size: 3rem; margin-bottom: 16px; color: var(--gray-light); display: block; }
 
+
+
+        /* CARROSSEL DE FOTOS DOS IMÓVEIS */
+        .card-gallery-btn,
+        .modal-gallery-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 38px;
+            height: 38px;
+            border: none;
+            border-radius: 50%;
+            background: rgba(13, 27, 75, 0.82);
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 8;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+        }
+
+        .card-gallery-btn:hover,
+        .modal-gallery-btn:hover {
+            background: var(--gold);
+            color: var(--navy);
+            transform: translateY(-50%) scale(1.08);
+        }
+
+        .card-gallery-btn.prev,
+        .modal-gallery-btn.prev { left: 12px; }
+
+        .card-gallery-btn.next,
+        .modal-gallery-btn.next { right: 12px; }
+
+        .card-gallery-counter,
+        .modal-gallery-counter {
+            position: absolute;
+            left: 50%;
+            bottom: 12px;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.62);
+            color: white;
+            padding: 5px 11px;
+            border-radius: 50px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            z-index: 8;
+        }
+
+        .modal-gallery-btn {
+            width: 46px;
+            height: 46px;
+            font-size: 1rem;
+        }
+
         /* MODAL */
         .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 2000; backdrop-filter: blur(4px); overflow-y: auto; padding: 40px 20px; }
         .modal-overlay.open { display: flex; align-items: flex-start; justify-content: center; }
@@ -2131,6 +2188,10 @@ imoveis.forEach(imovel => {
 let filtroAtivo = 'todos';
 let tabAtiva = 'todos';
 let favoritos = JSON.parse(localStorage.getItem('jc_favoritos') || '[]');
+let cardSlideTimers = [];
+let modalSlideTimer = null;
+let modalImovelAtual = null;
+let modalFotoAtual = 0;
 
 // ─── FORM STATE ──────────────────────────────────────
 let etapaAtual = 1;
@@ -2154,7 +2215,13 @@ const amenidadesLista = [
 ];
 
 // ─── RENDER CARDS ────────────────────────────────────
+function limparSlidesCards() {
+    cardSlideTimers.forEach(timer => clearInterval(timer));
+    cardSlideTimers = [];
+}
+
 function renderCards(lista) {
+    limparSlidesCards();
     const container = document.getElementById('lista-imoveis');
     if (lista.length === 0) {
         container.innerHTML = `<div class="empty-state"><i class="fas fa-home"></i><h3 style="color:var(--navy);margin-bottom:8px">Nenhum imóvel encontrado</h3><p>Tente outros filtros ou entre em contato pelo WhatsApp.</p><a href="https://wa.me/5521964495359" target="_blank" class="btn-primary" style="display:inline-flex;margin-top:20px"><i class="fab fa-whatsapp"></i> Falar com Corretor</a></div>`;
@@ -2163,12 +2230,18 @@ function renderCards(lista) {
     container.innerHTML = lista.map(im => {
         const isFav = favoritos.includes(im.id);
         const imgSrc = im.imagens[0];
+        const temGaleria = im.imagens && im.imagens.length > 1;
         const badgeFinalidade = im.finalidade === 'venda' ? `<span class="badge badge-venda">Venda</span>` : `<span class="badge badge-locacao">Locação</span>`;
         const badgeNovo = im.novo ? `<span class="badge badge-novo">Novo</span>` : '';
         return `
         <div class="card" onclick="abrirModal(${im.id})">
             <div class="card-img-wrapper">
-                <img src="${imgSrc}" alt="${im.titulo}" class="foto-imovel" onerror="this.src='https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=600&q=60'">
+                <img src="${imgSrc}" alt="${im.titulo}" class="foto-imovel" id="card-img-${im.id}" data-index="0" onerror="this.src='https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=600&q=60'">
+                ${temGaleria ? `
+                    <button class="card-gallery-btn prev" onclick="trocarFotoCard(event, ${im.id}, -1)" title="Foto anterior"><i class="fas fa-chevron-left"></i></button>
+                    <button class="card-gallery-btn next" onclick="trocarFotoCard(event, ${im.id}, 1)" title="Próxima foto"><i class="fas fa-chevron-right"></i></button>
+                    <div class="card-gallery-counter" id="card-counter-${im.id}">1/${im.imagens.length}</div>
+                ` : ''}
                 <div class="card-badges"><span class="badge badge-tipo">${im.tipo}</span>${badgeFinalidade}${badgeNovo}</div>
                 <button class="card-fav ${isFav ? 'active' : ''}" onclick="toggleFav(event, ${im.id})" title="${isFav ? 'Remover dos favoritos' : 'Favoritar'}">
                     <i class="${isFav ? 'fas' : 'far'} fa-heart"></i>
@@ -2190,6 +2263,29 @@ function renderCards(lista) {
             </div>
         </div>`;
     }).join('');
+    iniciarSlidesCards(lista);
+}
+
+function iniciarSlidesCards(lista) {
+    lista.forEach(im => {
+        if (!im.imagens || im.imagens.length <= 1) return;
+        const timer = setInterval(() => trocarFotoCard(null, im.id, 1), 10000);
+        cardSlideTimers.push(timer);
+    });
+}
+
+function trocarFotoCard(event, id, direcao) {
+    if (event) event.stopPropagation();
+    const im = imoveis.find(i => i.id === id);
+    const img = document.getElementById(`card-img-${id}`);
+    const counter = document.getElementById(`card-counter-${id}`);
+    if (!im || !img || !im.imagens || im.imagens.length <= 1) return;
+
+    const atual = Number(img.dataset.index || 0);
+    const novo = (atual + direcao + im.imagens.length) % im.imagens.length;
+    img.dataset.index = novo;
+    img.src = im.imagens[novo];
+    if (counter) counter.textContent = `${novo + 1}/${im.imagens.length}`;
 }
 
 function carregarImoveis() {
@@ -2255,13 +2351,24 @@ function toggleFav(event, id) {
 function abrirModal(id) {
     const im = imoveis.find(i => i.id === id);
     if (!im) return;
+
+    modalImovelAtual = im;
+    modalFotoAtual = 0;
+    clearInterval(modalSlideTimer);
+
     const thumbsHTML = im.imagens.map((src, i) =>
-        `<img src="${src}" class="modal-thumb ${i === 0 ? 'active' : ''}" onerror="this.style.display='none'" onclick="trocarFoto(this, '${src}')" alt="Foto ${i+1}">`
+        `<img src="${src}" class="modal-thumb ${i === 0 ? 'active' : ''}" onerror="this.style.display='none'" onclick="trocarFotoModal(${i})" alt="Foto ${i+1}">`
     ).join('');
+
     document.getElementById('modal-body').innerHTML = `
         <div class="modal-gallery">
             <img src="${im.imagens[0]}" alt="${im.titulo}" class="modal-main-img" id="modal-main-img" onerror="this.src='https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=800&q=60'">
-            ${im.imagens.length > 1 ? `<div class="modal-thumbs">${thumbsHTML}</div>` : ''}
+            ${im.imagens.length > 1 ? `
+                <button class="modal-gallery-btn prev" onclick="navegarFotoModal(event, -1)" title="Foto anterior"><i class="fas fa-chevron-left"></i></button>
+                <button class="modal-gallery-btn next" onclick="navegarFotoModal(event, 1)" title="Próxima foto"><i class="fas fa-chevron-right"></i></button>
+                <div class="modal-gallery-counter" id="modal-gallery-counter">1/${im.imagens.length}</div>
+                <div class="modal-thumbs">${thumbsHTML}</div>
+            ` : ''}
         </div>
         <div class="modal-body">
             <div class="modal-header">
@@ -2294,15 +2401,39 @@ function abrirModal(id) {
         </div>`;
     document.getElementById('modal-overlay').classList.add('open');
     document.body.style.overflow = 'hidden';
+
+    if (im.imagens.length > 1) {
+        modalSlideTimer = setInterval(() => navegarFotoModal(null, 1), 10000);
+    }
 }
 
 function fecharModal() {
+    clearInterval(modalSlideTimer);
+    modalSlideTimer = null;
+    modalImovelAtual = null;
+    modalFotoAtual = 0;
     document.getElementById('modal-overlay').classList.remove('open');
     document.body.style.overflow = 'auto';
 }
 
 function handleOverlayClick(e) {
     if (e.target === document.getElementById('modal-overlay')) fecharModal();
+}
+
+function navegarFotoModal(event, direcao) {
+    if (event) event.stopPropagation();
+    if (!modalImovelAtual || !modalImovelAtual.imagens || modalImovelAtual.imagens.length <= 1) return;
+    const novoIndex = (modalFotoAtual + direcao + modalImovelAtual.imagens.length) % modalImovelAtual.imagens.length;
+    trocarFotoModal(novoIndex);
+}
+
+function trocarFotoModal(index) {
+    if (!modalImovelAtual || !modalImovelAtual.imagens[index]) return;
+    modalFotoAtual = index;
+    document.getElementById('modal-main-img').src = modalImovelAtual.imagens[index];
+    const counter = document.getElementById('modal-gallery-counter');
+    if (counter) counter.textContent = `${index + 1}/${modalImovelAtual.imagens.length}`;
+    document.querySelectorAll('.modal-thumb').forEach((t, i) => t.classList.toggle('active', i === index));
 }
 
 function trocarFoto(thumb, src) {
