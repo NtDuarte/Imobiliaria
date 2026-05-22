@@ -24,7 +24,7 @@ header nav ul li a { color: white; text-decoration: none; font-weight: 400; font
 .search-box button { background: #1a2a6c; color: white; border: none; padding: 10px 25px; border-radius: 50px; cursor: pointer; font-weight: 600; }
 
 /* =============================================
-   SEÇÃO SOBRE NÓS — Layout 3 colunas (2 fotos)
+   SEÇÃO SOBRE NÓS — Nossa História com 2 fotos
    ============================================= */
 .about-section {
     padding: 80px 20px;
@@ -44,22 +44,45 @@ header nav ul li a { color: white; text-decoration: none; font-weight: 400; font
     align-items: center;
 }
 
-/* FOTO 1 — Coluna Esquerda */
+/* FOTO 1 — Esquerda / mais acima */
 .about-image {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
+    align-self: start;
+}
+
+/* FOTO 1 e FOTO 2 — mesma proporção visual */
+.about-image img,
+.about-image-secondary img {
+    width: 100%;
+    max-width: 420px;
+    height: 480px;
+    border-radius: 12px;
+    object-fit: cover;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .about-image img {
-    width: 100%;
-    height: 480px;
-    border-radius: 12px;
     box-shadow: 10px 10px 0px rgba(253, 187, 45, 0.35);
-    object-fit: cover;
 }
 
-/* TEXTO — Coluna Central */
+.about-image-secondary img {
+    box-shadow: -10px 10px 0px rgba(26, 42, 108, 0.2);
+}
+
+.about-image img:hover,
+.about-image-secondary img:hover {
+    transform: scale(1.02);
+}
+
+/* TEXTO — Centro */
+.about-text {
+    text-align: center;
+    max-width: 680px;
+    margin: 0 auto;
+}
+
 .about-text h2 {
     color: #1a2a6c;
     font-size: 2rem;
@@ -72,7 +95,7 @@ header nav ul li a { color: white; text-decoration: none; font-weight: 400; font
     width: 70px;
     height: 4px;
     background: #fdbb2d;
-    margin-top: 10px;
+    margin: 10px auto 0;
     border-radius: 2px;
 }
 
@@ -81,28 +104,53 @@ header nav ul li a { color: white; text-decoration: none; font-weight: 400; font
     font-size: 0.97rem;
     line-height: 1.8;
     margin-bottom: 16px;
-    text-align: justify;
+    text-align: center;
 }
 
-/* FOTO 2 — Coluna Direita */
+/* FOTO 2 — Direita / mais abaixo */
 .about-image-secondary {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-end;
+    align-self: end;
+    margin-top: 120px;
 }
 
-.about-image-secondary img {
-    width: 100%;
-    height: 420px;
-    border-radius: 12px;
-    box-shadow: -10px 10px 0px rgba(26, 42, 108, 0.2);
-    object-fit: cover;
+/* Badge CRECI */
+.creci-badge {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 18px;
+    margin: 25px 0;
+    border-radius: 14px;
+    background: #f8f9fc;
+    border-left: 4px solid #fdbb2d;
+    text-align: left;
+}
+
+.creci-badge i {
+    font-size: 1.6rem;
+    color: #1a2a6c;
+}
+
+.creci-badge-text strong {
+    display: block;
+    color: #1a2a6c;
+    font-size: 1rem;
+}
+
+.creci-badge-text span {
+    display: block;
+    color: #555;
+    font-size: 0.85rem;
 }
 
 /* Badges de Experiência */
 .badges-experiencia {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+    flex-wrap: wrap;
     gap: 12px;
     margin-top: 25px;
 }
@@ -112,20 +160,114 @@ header nav ul li a { color: white; text-decoration: none; font-weight: 400; font
     align-items: center;
     background: #f0f4f8;
     padding: 10px 15px;
-    border-radius: 8px;
+    border-radius: 999px;
     border-left: 4px solid #fdbb2d;
 }
 
 .badge-item i {
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     color: #1a2a6c;
-    margin-right: 10px;
+    margin-right: 8px;
 }
 
 .badge-item span {
     font-weight: 600;
     font-size: 0.85rem;
     color: #1a2a6c;
+}
+
+/* Responsividade — Tablet */
+@media (max-width: 1000px) {
+    .about-grid {
+        grid-template-columns: 1fr 1.3fr;
+        grid-template-rows: auto auto;
+        gap: 35px;
+    }
+
+    .about-image {
+        grid-column: 1 / 2;
+        grid-row: 1 / 2;
+    }
+
+    .about-text {
+        grid-column: 2 / 3;
+        grid-row: 1 / 3;
+    }
+
+    .about-image-secondary {
+        grid-column: 1 / 2;
+        grid-row: 2 / 3;
+        margin-top: 0;
+    }
+
+    .about-image img,
+    .about-image-secondary img {
+        height: 340px;
+        max-width: 100%;
+    }
+}
+
+/* Responsividade — Celular */
+@media (max-width: 768px) {
+    .about-section {
+        padding: 60px 20px;
+    }
+
+    .about-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        text-align: center;
+    }
+
+    .about-image {
+        order: 1;
+        width: 100%;
+    }
+
+    .about-text {
+        order: 2;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .about-image-secondary {
+        order: 3;
+        width: 100%;
+        margin-top: 0;
+    }
+
+    .about-image img,
+    .about-image-secondary img {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        aspect-ratio: 4 / 5;
+        box-shadow: none;
+    }
+
+    .about-text h2::after {
+        margin: 10px auto 0;
+    }
+
+    .about-text p {
+        text-align: center;
+    }
+
+    .creci-badge {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .badges-experiencia {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .badge-item {
+        justify-content: center;
+        width: fit-content;
+    }
 }
 
 /* Grid e Cards */
