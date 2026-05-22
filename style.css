@@ -23,13 +23,11 @@ header nav ul li a { color: white; text-decoration: none; font-weight: 400; font
 .search-box select, .search-box input { border: none; padding: 10px 15px; outline: none; flex: 1; border-radius: 50px; }
 .search-box button { background: #1a2a6c; color: white; border: none; padding: 10px 25px; border-radius: 50px; cursor: pointer; font-weight: 600; }
 
-/* =============================================
-   SEÇÃO SOBRE NÓS — Nossa História com 2 fotos
-   ============================================= */
+/* Seção Sobre Nós (Ajustada) */
 .about-section {
     padding: 80px 20px;
     background: #fff;
-    margin-top: 40px;
+    margin-top: 40px; 
     margin-bottom: 60px;
     border-radius: 15px;
     position: relative;
@@ -39,235 +37,47 @@ header nav ul li a { color: white; text-decoration: none; font-weight: 400; font
 
 .about-grid {
     display: grid;
-    grid-template-columns: 1fr 1.5fr 1fr;
-    gap: 40px;
-    align-items: center;
-}
-
-/* FOTO 1 — Esquerda / mais acima */
-.about-image {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    align-self: start;
-}
-
-/* FOTO 1 e FOTO 2 — mesma proporção visual */
-.about-image img,
-.about-image-secondary img {
-    width: 100%;
-    max-width: 420px;
-    height: 480px;
-    border-radius: 12px;
-    object-fit: cover;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.about-image img {
-    box-shadow: 10px 10px 0px rgba(253, 187, 45, 0.35);
-}
-
-.about-image-secondary img {
-    box-shadow: -10px 10px 0px rgba(26, 42, 108, 0.2);
-}
-
-.about-image img:hover,
-.about-image-secondary img:hover {
-    transform: scale(1.02);
-}
-
-/* TEXTO — Centro */
-.about-text {
-    text-align: center;
-    max-width: 680px;
-    margin: 0 auto;
+    grid-template-columns: 3fr 2fr; /* Texto com mais espaço que a imagem */
+    gap: 50px;
+    align-items: start;
 }
 
 .about-text h2 {
     color: #1a2a6c;
-    font-size: 2rem;
-    margin-bottom: 20px;
+    font-size: 2.2rem;
+    margin-bottom: 25px;
 }
 
 .about-text h2::after {
     content: '';
     display: block;
-    width: 70px;
+    width: 80px;
     height: 4px;
     background: #fdbb2d;
-    margin: 10px auto 0;
+    margin-top: 10px;
     border-radius: 2px;
 }
 
 .about-text p {
     color: #555;
-    font-size: 0.97rem;
+    font-size: 1.05rem;
     line-height: 1.8;
-    margin-bottom: 16px;
-    text-align: center;
+    margin-bottom: 20px;
+    text-align: justify;
 }
 
-/* FOTO 2 — Direita / mais abaixo */
-.about-image-secondary {
+.about-image {
     display: flex;
     justify-content: center;
-    align-items: flex-end;
-    align-self: end;
-    margin-top: 120px;
 }
 
-/* Badge CRECI */
-.creci-badge {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    padding: 18px;
-    margin: 25px 0;
-    border-radius: 14px;
-    background: #f8f9fc;
-    border-left: 4px solid #fdbb2d;
-    text-align: left;
-}
-
-.creci-badge i {
-    font-size: 1.6rem;
-    color: #1a2a6c;
-}
-
-.creci-badge-text strong {
-    display: block;
-    color: #1a2a6c;
-    font-size: 1rem;
-}
-
-.creci-badge-text span {
-    display: block;
-    color: #555;
-    font-size: 0.85rem;
-}
-
-/* Badges de Experiência */
-.badges-experiencia {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-top: 25px;
-}
-
-.badge-item {
-    display: flex;
-    align-items: center;
-    background: #f0f4f8;
-    padding: 10px 15px;
-    border-radius: 999px;
-    border-left: 4px solid #fdbb2d;
-}
-
-.badge-item i {
-    font-size: 1.1rem;
-    color: #1a2a6c;
-    margin-right: 8px;
-}
-
-.badge-item span {
-    font-weight: 600;
-    font-size: 0.85rem;
-    color: #1a2a6c;
-}
-
-/* Responsividade — Tablet */
-@media (max-width: 1000px) {
-    .about-grid {
-        grid-template-columns: 1fr 1.3fr;
-        grid-template-rows: auto auto;
-        gap: 35px;
-    }
-
-    .about-image {
-        grid-column: 1 / 2;
-        grid-row: 1 / 2;
-    }
-
-    .about-text {
-        grid-column: 2 / 3;
-        grid-row: 1 / 3;
-    }
-
-    .about-image-secondary {
-        grid-column: 1 / 2;
-        grid-row: 2 / 3;
-        margin-top: 0;
-    }
-
-    .about-image img,
-    .about-image-secondary img {
-        height: 340px;
-        max-width: 100%;
-    }
-}
-
-/* Responsividade — Celular */
-@media (max-width: 768px) {
-    .about-section {
-        padding: 60px 20px;
-    }
-
-    .about-grid {
-        display: flex;
-        flex-direction: column;
-        gap: 30px;
-        text-align: center;
-    }
-
-    .about-image {
-        order: 1;
-        width: 100%;
-    }
-
-    .about-text {
-        order: 2;
-        width: 100%;
-        max-width: 100%;
-    }
-
-    .about-image-secondary {
-        order: 3;
-        width: 100%;
-        margin-top: 0;
-    }
-
-    .about-image img,
-    .about-image-secondary img {
-        width: 100%;
-        max-width: 100%;
-        height: auto;
-        aspect-ratio: 4 / 5;
-        box-shadow: none;
-    }
-
-    .about-text h2::after {
-        margin: 10px auto 0;
-    }
-
-    .about-text p {
-        text-align: center;
-    }
-
-    .creci-badge {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .badges-experiencia {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .badge-item {
-        justify-content: center;
-        width: fit-content;
-    }
+.about-image img {
+    width: 100%;
+    max-width: 400px; /* Limita o tamanho da foto do Rodrigo */
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 15px 15px 0px rgba(253, 187, 45, 0.3);
+    object-fit: cover;
 }
 
 /* Grid e Cards */
@@ -297,7 +107,7 @@ footer strong { color: #fdbb2d; }
 
 /* Estilos do Modal */
 .modal {
-    display: none;
+    display: none; 
     position: fixed;
     z-index: 1000;
     left: 0;
@@ -381,60 +191,52 @@ footer strong { color: #fdbb2d; }
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
+/* Badges de Experiência */
+.badges-experiencia {
+    display: flex;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.badge-item {
+    display: flex;
+    align-items: center;
+    background: #f0f4f8;
+    padding: 10px 15px;
+    border-radius: 8px;
+    border-left: 4px solid #fdbb2d;
+}
+
+.badge-item i {
+    font-size: 1.5rem;
+    color: #1a2a6c;
+    margin-right: 10px;
+}
+
+.badge-item span {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #1a2a6c;
+}
+
 /* --- Responsividade (Media Queries) --- */
 
-@media (max-width: 1000px) {
+@media (max-width: 850px) {
     .about-grid {
-        grid-template-columns: 1fr 1.3fr;
-        grid-template-rows: auto auto;
+        grid-template-columns: 1fr;
+        text-align: center;
     }
-
-    .about-image {
-        grid-column: 1 / 2;
-        grid-row: 1 / 2;
-    }
-
-    .about-text {
-        grid-column: 2 / 3;
-        grid-row: 1 / 3;
-    }
-
-    .about-image-secondary {
-        grid-column: 1 / 2;
-        grid-row: 2 / 3;
-    }
-
-    .about-image img { height: 340px; }
-    .about-image-secondary img { height: 300px; }
+    .about-text h2::after { margin: 10px auto; }
+    .about-text p { text-align: center; }
+    .badges-experiencia { justify-content: center; }
+    .about-image { margin-top: 30px; }
 }
 
 @media (max-width: 768px) {
-    .about-grid {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto;
-        text-align: center;
-        gap: 30px;
+    .badges-experiencia {
+        flex-direction: column;
+        gap: 10px;
     }
-
-    .about-image,
-    .about-text,
-    .about-image-secondary {
-        grid-column: auto;
-        grid-row: auto;
-    }
-
-    .about-text h2::after { margin: 10px auto; }
-    .about-text p { text-align: center; }
-
-    .about-image img,
-    .about-image-secondary img {
-        height: 260px;
-        box-shadow: none;
-    }
-
-    .badges-experiencia { align-items: center; }
-
-    .badge-item { justify-content: center; }
 }
 
 @media (max-width: 600px) {
@@ -444,27 +246,26 @@ footer strong { color: #fdbb2d; }
     .search-box { flex-direction: column; border-radius: 15px; }
     .search-box select, .search-box input, .search-box button { width: 100%; margin: 5px 0; }
 }
-
 /* --- ESTILIZAÇÃO DO HERO (ALINHAMENTO) --- */
 .hero {
     background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=1200&q=80');
     background-size: cover;
     background-position: center;
-    min-height: 500px;
+    min-height: 500px; /* Altura do banner */
     display: flex;
-    align-items: center;
+    align-items: center; /* Centraliza tudo verticalmente */
 }
 
 .hero-layout {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; /* Joga um pra cada lado */
     align-items: center;
     width: 100%;
 }
 
 /* CAIXA DE SERVIÇOS (ESQUERDA) */
 .servicos-col {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.1); /* Efeito de vidro */
     backdrop-filter: blur(8px);
     padding: 40px;
     border-radius: 15px;
@@ -474,7 +275,7 @@ footer strong { color: #fdbb2d; }
 }
 
 .servicos-col h3 {
-    color: #fdbb2d;
+    color: #fdbb2d; /* Dourado JC Nascimento */
     font-size: 1.4rem;
     margin-bottom: 25px;
     letter-spacing: 1px;
@@ -501,7 +302,7 @@ footer strong { color: #fdbb2d; }
     flex: 1;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: center; /* Centraliza o texto e a barra nela mesma */
 }
 
 .search-col h2 {
@@ -512,20 +313,21 @@ footer strong { color: #fdbb2d; }
     text-align: center;
 }
 
+/* Ajuste fino na barra de busca para ela não esticar demais */
 .search-box {
     background: white;
     padding: 8px;
     border-radius: 50px;
     display: flex;
     width: 100%;
-    max-width: 650px;
+    max-width: 650px; /* Limita a largura da barra */
     box-shadow: 0 10px 25px rgba(0,0,0,0.2);
 }
 
 /* RESPONSIVIDADE (MOBILE) */
 @media (max-width: 900px) {
     .hero-layout {
-        flex-direction: column;
+        flex-direction: column; /* Empilha no celular */
         text-align: center;
         gap: 40px;
     }
