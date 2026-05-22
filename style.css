@@ -37,9 +37,9 @@ header nav ul li a { color: white; text-decoration: none; font-weight: 400; font
 
 .about-grid {
     display: grid;
-    grid-template-columns: 3fr 2fr; /* Texto com mais espaço que a imagem */
-    gap: 50px;
-    align-items: start;
+    grid-template-columns: 1fr 1.2fr 1fr;
+    gap: 40px;
+    align-items: center;
 }
 
 .about-text h2 {
@@ -73,11 +73,20 @@ header nav ul li a { color: white; text-decoration: none; font-weight: 400; font
 
 .about-image img {
     width: 100%;
-    max-width: 400px; /* Limita o tamanho da foto do Rodrigo */
-    height: auto;
+    max-width: 400px;
+    height: 520px;
     border-radius: 12px;
     box-shadow: 15px 15px 0px rgba(253, 187, 45, 0.3);
     object-fit: cover;
+}
+
+.foto-1 {
+    align-self: start;
+}
+
+.foto-2 {
+    align-self: end;
+    margin-top: 120px;
 }
 
 /* Grid e Cards */
@@ -230,12 +239,16 @@ footer strong { color: #fdbb2d; }
     .about-text p { text-align: center; }
     .badges-experiencia { justify-content: center; }
     .about-image { margin-top: 30px; }
+    .foto-2 { margin-top: 0; }
 }
 
 @media (max-width: 768px) {
     .badges-experiencia {
         flex-direction: column;
         gap: 10px;
+    }
+    .about-image img {
+        height: 420px;
     }
 }
 
@@ -245,6 +258,7 @@ footer strong { color: #fdbb2d; }
     .search-container h2 { font-size: 1.5rem; }
     .search-box { flex-direction: column; border-radius: 15px; }
     .search-box select, .search-box input, .search-box button { width: 100%; margin: 5px 0; }
+    .about-image img { height: 340px; }
 }
 /* --- ESTILIZAÇÃO DO HERO (ALINHAMENTO) --- */
 .hero {
