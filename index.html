@@ -2017,6 +2017,7 @@
  *    Exemplo:
  *      index.html
  *      img/
+ *        Casa em Itaipu/
  *        Apartamento Bom Pastor/
  *        Apartamento Copa/
  *        Apartamento Proximo Bauru/
@@ -2101,8 +2102,28 @@ function montarLinkWhatsApp(titulo) {
 const mapaPadraoBelfordRoxo = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14716.4153214572!2d-43.39991725!3d-22.76088745!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9965126!2sBelford+Roxo+RJ!5e0!3m2!1spt-BR!2sbr";
 
 const imoveis = [
-    {
+     {
         id: 1,
+        tipo: "Casa",
+        bairro: "Itaipú",
+        cidade: "Belford Roxo",
+        finalidade: "venda",
+        titulo: "Casa em Itaipú",
+        preco: 235000,
+        precoFormatado: "R$ 235.000",
+        quartos: 3,
+        banheiros: 2,
+        area: 300,
+        vagas: 2,
+        novo: false,
+        descricao: "Casa de três quartos, sala, cozinha e banheiro, área de serviços e um amplo quintal. Lote de terreno com 300m2 Av. Suburbana, Bairro Itaipú, Belgord Roxo/RJ.IMÓVEL COM ESCRITURA REGISTRADA.",
+        pastaFotos: "Casa em Itaipú",
+        imagens: gerarImagensDaPasta("Casa em Itaipú"),
+        linkZap: montarLinkWhatsApp("Casa em Itaipú"),
+        mapaLink: mapaPadraoBelfordRoxo
+    },
+    {
+        id: 2,
         tipo: "apartamento",
         bairro: "Bom Pastor",
         cidade: "Belford Roxo",
@@ -2122,7 +2143,7 @@ const imoveis = [
         mapaLink: mapaPadraoBelfordRoxo
     },
     {
-        id: 2,
+        id: 3,
         tipo: "apartamento",
         bairro: "Copacabana",
         cidade: "Rio de Janeiro",
@@ -2142,7 +2163,7 @@ const imoveis = [
         mapaLink: mapaPadraoBelfordRoxo
     },
     {
-        id: 3,
+        id: 4,
         tipo: "apartamento",
         bairro: "Vila Vitório",
         cidade: "Belford Roxo",
@@ -2162,7 +2183,7 @@ const imoveis = [
         mapaLink: mapaPadraoBelfordRoxo
     },
     {
-        id: 4,
+        id: 5,
         tipo: "casa",
         bairro: "Nova Piam",
         cidade: "Belford Roxo",
@@ -2182,7 +2203,7 @@ const imoveis = [
         mapaLink: mapaPadraoBelfordRoxo
     },
     {
-        id: 5,
+        id: 6,
         tipo: "casa",
         bairro: "Nilópolis",
         cidade: "Nilópolis",
@@ -2202,7 +2223,7 @@ const imoveis = [
         mapaLink: mapaPadraoBelfordRoxo
     },
      {
-        id: 6,
+        id: 7,
         tipo: "comercial",
         bairro: "Centro",
         cidade: "Belford Roxo",
@@ -2222,7 +2243,7 @@ const imoveis = [
         mapaLink: mapaPadraoBelfordRoxo
     },
     {
-        id: 7,
+        id: 8,
         tipo: "apartamento",
         bairro: "Santa Maria",
         cidade: "Belford Roxo",
