@@ -1747,7 +1747,7 @@
 
                 <div class="form-group">
                     <label class="form-label">Tipo do imóvel <span>*</span></label>
-                    <select class="form-select" id="an-tipo">
+                    <select class="form-select" id="an-tipo" onchange="atualizarCamposCondicionais()">
                         <option value="">Selecione o tipo</option>
                         <option value="Casa">Casa</option>
                         <option value="Apartamento">Apartamento</option>
@@ -1786,7 +1786,7 @@
                 </div>
 
                 <div class="form-grid-3" style="margin-bottom:16px">
-                    <div class="form-group" id="grupo-quartos">
+                    <div class="form-group campo-condicional visivel" id="grupo-quartos">
                         <label class="form-label">Quartos</label>
                         <select class="form-select" id="an-quartos">
                             <option value="">—</option>
@@ -1794,7 +1794,7 @@
                             <option>4</option><option>5+</option>
                         </select>
                     </div>
-                    <div class="form-group" id="grupo-banheiros">
+                    <div class="form-group campo-condicional visivel" id="grupo-banheiros">
                         <label class="form-label">Banheiros</label>
                         <select class="form-select" id="an-banheiros">
                             <option value="">—</option>
@@ -2017,14 +2017,18 @@
  *    Exemplo:
  *      index.html
  *      img/
- *        Casa em Itaipu/
+ *        Casa em Itaipú/
  *        Apartamento Bom Pastor/
  *        Apartamento Copa/
  *        Apartamento Proximo Bauru/
  *        Casa em Nova Piam/
  *        Casa Nilopolis/
- *        Casa lazer/
+ *        Galpao Belford Roxo/
  *        Predio a venda/
+ *        Apartamento Centro Bel/
+ *
+ *    Observação: o nome de cada pasta em disco precisa ser IDÊNTICO
+ *    (acentos incluídos) ao valor de "pastaFotos" de cada imóvel logo abaixo.
  *
  * 2. Dentro de cada pasta, coloque as fotos em sequência:
  *      1.jpeg, 2.jpeg, 3.jpeg... até 30.jpeg
@@ -2066,12 +2070,22 @@ async function encontrarFotoExistente(nomePasta, numero) {
     return null;
 }
 
+// Otimização: para de tentar depois de 2 falhas seguidas, em vez de sempre
+// testar os 30 números x 4 extensões (até 120 requisições por imóvel).
 async function identificarFotosDaPasta(nomePasta, total = TOTAL_FOTOS_POR_PASTA) {
     const imagens = [];
+    let falhasSeguidas = 0;
+    const LIMITE_FALHAS_SEGUIDAS = 2;
 
     for (let numero = 1; numero <= total; numero++) {
         const foto = await encontrarFotoExistente(nomePasta, numero);
-        if (foto) imagens.push(foto);
+        if (foto) {
+            imagens.push(foto);
+            falhasSeguidas = 0;
+        } else {
+            falhasSeguidas++;
+            if (falhasSeguidas >= LIMITE_FALHAS_SEGUIDAS) break;
+        }
     }
 
     return imagens.length ? imagens : [FOTO_FALLBACK];
@@ -2104,7 +2118,7 @@ const mapaPadraoBelfordRoxo = "https://www.google.com/maps/embed?pb=!1m18!1m12!1
 const imoveis = [
      {
         id: 1,
-        tipo: "Casa",
+        tipo: "casa",
         bairro: "Itaipú",
         cidade: "Belford Roxo",
         finalidade: "venda",
@@ -2247,7 +2261,7 @@ const imoveis = [
         tipo: "apartamento",
         bairro: "Centro",
         cidade: "Belford Roxo",
-        finalidade: "locação",
+        finalidade: "locacao",
         titulo: "Apartamento Centro Bel",
         preco: 1500,
         precoFormatado: "R$ 1.500",
@@ -2257,7 +2271,7 @@ const imoveis = [
         vagas: 2,
         novo: false,
         descricao: "Alugo apartamento no Centro de Belford Roxo, próximo ao Macdonald, Farmácia, ponto de ônibus, comércio variado, tudo para facilitar a vida do interessado, Três quartos, sendo um suíte, sala, cozinha, banheiro social, área de serviço interna e uma ampla área externa, cobertura. (Câmera de vídeo, interfone, duas entradas para acesso ao imóvel) paga água, luz e IPTU.",
-        pastaFotos: "Apartamento",
+        pastaFotos: "Apartamento Centro Bel",
         imagens: gerarImagensDaPasta("Apartamento Centro Bel"),
         linkZap: montarLinkWhatsApp("Apartamento Centro Bel"),
         mapaLink: mapaPadraoBelfordRoxo
@@ -2312,6 +2326,9 @@ let etapaAtual = 1;
 const totalEtapas = 5;
 let finalidadeSelecionada = 'venda';
 let fotosAnuncio = [];
+
+// Tipos de imóvel para os quais os campos de quartos/banheiros não fazem sentido
+const TIPOS_SEM_COMODOS = ['Terreno / Lote', 'Galpão / Armazém'];
 
 const amenidadesLista = [
     { icon: 'fa-swimming-pool', label: 'Piscina' },
@@ -2605,6 +2622,16 @@ function selecionarFinalidade(tipo) {
     finalidadeSelecionada = tipo;
     document.getElementById('btn-venda').classList.toggle('active', tipo === 'venda');
     document.getElementById('btn-locacao').classList.toggle('active', tipo === 'locacao');
+}
+
+// ─── ANUNCIAR: CAMPOS CONDICIONAIS (Quartos/Banheiros) ────────
+function atualizarCamposCondicionais() {
+    const tipo = document.getElementById('an-tipo').value;
+    const esconder = TIPOS_SEM_COMODOS.includes(tipo);
+    const grupoQuartos = document.getElementById('grupo-quartos');
+    const grupoBanheiros = document.getElementById('grupo-banheiros');
+    if (grupoQuartos) grupoQuartos.classList.toggle('visivel', !esconder);
+    if (grupoBanheiros) grupoBanheiros.classList.toggle('visivel', !esconder);
 }
 
 // ─── ANUNCIAR: FOTOS ─────────────────────────────────
